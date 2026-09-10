@@ -12,6 +12,40 @@
 		:root { --bg:#f4f7f5; --surface:#fff; --ink:#14262d; --muted:#74858a; --line:#e2ebe7; --green:#087f72; --green-dark:#065a53; --mint:#def1eb; --orange:#ef805e; --gold:#f5cb6f; --shadow:0 18px 60px rgba(17,47,50,.10); }
 		[data-theme="dark"] { --bg:#0e2024; --surface:#162d32; --ink:#edf7f3; --muted:#98b0ad; --line:#294449; --green:#58c7af; --green-dark:#8ce0ca; --mint:#1d4845; --orange:#f59876; --gold:#e4be5e; --shadow:0 18px 60px rgba(0,0,0,.24); }
 		* { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--bg); font-family:'IBM Plex Sans Arabic',sans-serif; transition:background .25s,color .25s; } button,input,textarea,select { font:inherit; } button { cursor:pointer; border:0; } a { color:inherit; text-decoration:none; }
+		.cinematic-intro { position:fixed; inset:0; z-index:2000; overflow:hidden; display:grid; place-items:center; background:#03070f; color:#f4f8ff; isolation:isolate; transition:opacity .8s ease,visibility .8s ease; }
+		.cinematic-intro.is-done { opacity:0; visibility:hidden; pointer-events:none; }
+		.intro-canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.9; }
+		.intro-space { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 48%,rgba(20,73,107,.22),transparent 35%),linear-gradient(180deg,#02050c,#06111d 52%,#02050b); }
+		.intro-space:before { content:""; position:absolute; inset:48% 0 auto; height:1px; background:linear-gradient(90deg,transparent,rgba(76,189,255,.12),rgba(255,116,54,.2),rgba(76,189,255,.12),transparent); box-shadow:0 0 35px 9px rgba(37,129,183,.1); transform:perspective(180px) rotateX(62deg) scaleY(10); transform-origin:center top; }
+		.intro-space:after { content:""; position:absolute; left:50%; bottom:10%; width:min(70vw,800px); height:20%; transform:translateX(-50%) perspective(260px) rotateX(62deg); background:linear-gradient(90deg,transparent,rgba(20,139,222,.1),rgba(255,104,39,.13),rgba(20,139,222,.1),transparent); filter:blur(22px); opacity:.75; }
+		.intro-streaks { position:absolute; inset:0; perspective:700px; transform-style:preserve-3d; }
+		.intro-streak { position:absolute; top:calc(50% + var(--y)); width:clamp(130px,28vw,430px); height:2px; opacity:0; filter:blur(var(--blur)) drop-shadow(0 0 9px currentColor); animation:streakRush var(--speed) var(--delay) cubic-bezier(.12,.75,.18,1) infinite; }
+		.intro-streak:after { content:""; position:absolute; inset:-3px 0; background:linear-gradient(90deg,transparent, currentColor 65%,#fff); border-radius:50%; }
+		.intro-streak.blue { left:-15%; color:#32b9ff; transform:rotate(var(--angle)); }
+		.intro-streak.orange { right:-15%; color:#ff713e; transform:rotate(calc(var(--angle) * -1)); animation-name:streakRushReverse; }
+		@keyframes streakRush { 0%,10% { opacity:0; transform:translate3d(-18vw,0,0) rotate(var(--angle)) scaleX(.25); } 30% { opacity:.95; } 70% { opacity:.42; transform:translate3d(68vw,calc(var(--y) * -.35),80px) rotate(var(--angle)) scaleX(1.2); } 100% { opacity:0; transform:translate3d(105vw,calc(var(--y) * -.6),120px) rotate(var(--angle)) scaleX(1.5); } }
+		@keyframes streakRushReverse { 0%,10% { opacity:0; transform:translate3d(18vw,0,0) rotate(calc(var(--angle) * -1)) scaleX(.25); } 30% { opacity:.95; } 70% { opacity:.42; transform:translate3d(-68vw,calc(var(--y) * -.35),80px) rotate(calc(var(--angle) * -1)) scaleX(1.2); } 100% { opacity:0; transform:translate3d(-105vw,calc(var(--y) * -.6),120px) rotate(calc(var(--angle) * -1)) scaleX(1.5); } }
+		.intro-lockup { position:relative; z-index:2; width:min(88vw,620px); text-align:center; transform:translateY(4vh); animation:lockupCamera 4.3s cubic-bezier(.2,.8,.2,1) both; }
+		.intro-welcome { margin:0 0 12px; color:#e9f5ff; font:700 clamp(12px,1.35vw,18px)/1 Manrope,sans-serif; letter-spacing:clamp(5px,1.1vw,14px); padding-left:clamp(5px,1.1vw,14px); opacity:0; text-shadow:0 0 16px rgba(136,214,255,.8); animation:welcomeReveal .7s 1.78s cubic-bezier(.15,.8,.2,1) both; }
+		.intro-logo { position:relative; margin:0; font:800 clamp(76px,17vw,172px)/.8 Manrope,sans-serif; letter-spacing:clamp(4px,1vw,12px); padding-left:clamp(4px,1vw,12px); color:#f8fbff; opacity:0; filter:drop-shadow(0 0 12px rgba(185,224,255,.6)); animation:logoAssemble 1.5s .72s cubic-bezier(.16,.84,.2,1) both; }
+		.intro-logo:before { content:"AMG"; position:absolute; inset:0; color:transparent; -webkit-text-stroke:1px rgba(76,190,255,.9); filter:drop-shadow(0 0 10px rgba(43,180,255,.75)); animation:outlineFlash 1.3s .7s ease both; }
+		.intro-logo:after { content:""; position:absolute; top:0; bottom:0; left:-20%; width:18%; opacity:0; transform:skewX(-18deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent); mix-blend-mode:screen; animation:lightSweep .85s 1.55s ease-out both; }
+		.intro-tagline { margin:24px 0 0; color:rgba(224,239,250,.74); font:500 clamp(9px,1.1vw,13px)/1 Manrope,sans-serif; letter-spacing:clamp(2px,.55vw,6px); padding-left:clamp(2px,.55vw,6px); opacity:0; animation:taglineReveal .6s 2.72s ease both; }
+		.intro-ring { position:absolute; left:50%; top:50%; width:min(64vw,480px); aspect-ratio:1; border:1px solid rgba(49,183,255,.0); border-radius:50%; transform:translate(-50%,-44%) rotate(-18deg) scale(.55); opacity:0; box-shadow:0 0 28px rgba(38,157,226,.2),inset 0 0 28px rgba(255,103,44,.1); animation:ringOrbit 1.55s 2.78s ease-in-out both; }
+		.intro-ring:before,.intro-ring:after { content:""; position:absolute; inset:8%; border-radius:50%; border-top:2px solid #2cbcff; border-right:1px solid transparent; filter:drop-shadow(0 0 8px #2cbcff); }
+		.intro-ring:after { inset:16%; border-top:0; border-bottom:2px solid #ff6e3b; border-left:1px solid transparent; filter:drop-shadow(0 0 8px #ff6e3b); transform:rotate(105deg); }
+		.intro-flare { position:absolute; z-index:3; width:10px; height:10px; border-radius:50%; background:#fff; opacity:0; box-shadow:0 0 10px 4px #fff,0 0 32px 12px #2abaff,0 0 70px 20px rgba(255,103,46,.6); animation:flareBurst .9s 3.38s ease-out both; }
+		.intro-vignette { position:absolute; inset:0; z-index:4; pointer-events:none; box-shadow:inset 0 0 150px 45px #02050b; }
+		@keyframes lockupCamera { 0%,72% { transform:translateY(4vh) scale(1); } 86% { transform:translateY(4vh) scale(1.04); } 100% { transform:translateY(4vh) scale(1.18); opacity:0; filter:blur(6px); } }
+		@keyframes logoAssemble { 0% { opacity:0; transform:scale(.35); letter-spacing:clamp(20px,4vw,52px); filter:blur(14px) drop-shadow(0 0 0 transparent); } 42% { opacity:1; transform:scale(1.04); } 70% { letter-spacing:clamp(4px,1vw,12px); filter:blur(0) drop-shadow(0 0 18px rgba(185,224,255,.8)); } 100% { opacity:1; } }
+		@keyframes outlineFlash { 0%,35% { opacity:1; } 70%,100% { opacity:0; } }
+		@keyframes welcomeReveal { 0% { opacity:0; transform:translateY(14px); letter-spacing:16px; filter:blur(8px); } 100% { opacity:1; transform:none; letter-spacing:clamp(5px,1.1vw,14px); filter:none; } }
+		@keyframes taglineReveal { from { opacity:0; transform:translateY(10px); filter:blur(5px); } to { opacity:1; transform:none; filter:none; } }
+		@keyframes lightSweep { 0% { left:-20%; opacity:0; } 20% { opacity:.9; } 100% { left:120%; opacity:0; } }
+		@keyframes ringOrbit { 0% { opacity:0; transform:translate(-50%,-44%) rotate(-18deg) scale(.55); } 30% { opacity:.9; } 100% { opacity:.8; transform:translate(-50%,-44%) rotate(155deg) scale(1.15); } }
+		@keyframes flareBurst { 0% { opacity:0; transform:scale(.2); } 25% { opacity:1; } 100% { opacity:0; transform:scale(18); } }
+		@media (max-width:600px) { .intro-lockup { transform:translateY(2vh); } .intro-welcome { margin-bottom:10px; } .intro-tagline { margin-top:19px; } .intro-ring { width:88vw; } .intro-streak { width:48vw; } }
+		@media (prefers-reduced-motion:reduce) { .intro-streak { animation-duration:2.3s; } .intro-lockup { animation-duration:3.8s; } }
 		.shell { min-height:100vh; overflow:hidden; position:relative; } .shell:before { content:""; position:absolute; width:560px; height:560px; left:-230px; top:-230px; background:radial-gradient(circle,rgba(239,128,94,.19),transparent 67%); pointer-events:none; } .shell:after { content:""; position:absolute; width:450px; height:450px; right:-220px; bottom:-250px; background:radial-gradient(circle,rgba(8,127,114,.16),transparent 67%); pointer-events:none; }
 		header { width:min(1180px,calc(100% - 44px)); margin:auto; height:86px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1; } .logo { display:flex; align-items:center; gap:9px; margin-inline-start:auto; } .brand-mark { width:44px; height:44px; display:grid; place-items:center; flex-shrink:0; filter:drop-shadow(0 10px 18px rgba(8,127,114,.14)); } .brand-mark svg { width:100%; height:100%; display:block; } .mark { display:grid; place-items:center; width:42px; height:42px; border-radius:12px; background:var(--orange); color:#17323a; font:800 18px Manrope; } .logo b { display:block; font:800 14px Manrope; letter-spacing:0.8px; } .logo small { display:block; color:var(--muted); letter-spacing:0.8px; font:600 8px Manrope; text-transform:uppercase; } .header-actions { display:flex; gap:10px; align-items:center; margin-inline-end:auto; } .theme { width:39px; height:39px; background:var(--surface); border:1px solid var(--line); color:var(--ink); border-radius:9px; } .wallet-badge { display:flex; align-items:center; justify-content:center; gap:8px; min-width:110px; height:42px; background:linear-gradient(135deg, rgba(8,127,114,.10), rgba(239,128,94,.06)); border:1px solid var(--line); border-radius:10px; padding:10px 16px; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08); } .wallet-badge:hover { background:var(--mint); border-color:var(--green); }
 		main { position:relative; z-index:1; } .screen { display:none; } .screen.active { display:block; animation:appear .4s ease both; } @keyframes appear { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:none; } }
@@ -67,6 +101,29 @@
 </head>
 <body>
 	<div class="shell">
+		<div class="cinematic-intro" id="cinematicIntro" role="presentation" aria-label="AMG">
+			<div class="intro-space"></div>
+			<canvas class="intro-canvas" id="introCanvas" aria-hidden="true"></canvas>
+			<div class="intro-streaks" aria-hidden="true">
+				<i class="intro-streak blue" style="--y:-27vh;--angle:-12deg;--delay:.05s;--speed:1.35s;--blur:0px"></i>
+				<i class="intro-streak blue" style="--y:-13vh;--angle:8deg;--delay:.22s;--speed:1.55s;--blur:1px"></i>
+				<i class="intro-streak blue" style="--y:4vh;--angle:-5deg;--delay:.1s;--speed:1.2s;--blur:0px"></i>
+				<i class="intro-streak blue" style="--y:19vh;--angle:10deg;--delay:.38s;--speed:1.6s;--blur:1px"></i>
+				<i class="intro-streak blue" style="--y:31vh;--angle:-8deg;--delay:.3s;--speed:1.4s;--blur:2px"></i>
+				<i class="intro-streak orange" style="--y:-23vh;--angle:-9deg;--delay:.15s;--speed:1.5s;--blur:1px"></i>
+				<i class="intro-streak orange" style="--y:-7vh;--angle:6deg;--delay:.34s;--speed:1.3s;--blur:0px"></i>
+				<i class="intro-streak orange" style="--y:10vh;--angle:-11deg;--delay:.05s;--speed:1.55s;--blur:1px"></i>
+				<i class="intro-streak orange" style="--y:25vh;--angle:7deg;--delay:.28s;--speed:1.25s;--blur:0px"></i>
+			</div>
+			<div class="intro-ring" aria-hidden="true"></div>
+			<div class="intro-lockup">
+				<p class="intro-welcome">WELCOME</p>
+				<h1 class="intro-logo">AMG</h1>
+				<p class="intro-tagline">LET’S BUILD SOMETHING GREAT.</p>
+			</div>
+			<div class="intro-flare" aria-hidden="true"></div>
+			<div class="intro-vignette" aria-hidden="true"></div>
+		</div>
 		<header>
 			<div class="header-actions">
 				<button class="secondary" id="themeToggle" title="تبديل الوضع">☾</button>
@@ -171,11 +228,13 @@
 										<label>موظف خدمة العملاء <em>*</em></label>
 										<select name="supportAgent">
 											<option value="">اختر الموظف</option>
-											<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
-											<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+											<option value="201147722918">الدعم 1</option>
+											<option value="201117823768">الدعم 2</option>
+											<option value="201557417423">الدعم 3</option>
 										</select>
 										<span class="error"></span>
 									</div>
+									<div class="field full"><label>كود الاستخدام</label><input name="usageCode" placeholder="أدخل كود الاستخدام إن وجد"><span class="error"></span></div>
 									<div class="field"><label>البريد الإلكتروني</label><input name="email" type="email" placeholder="name@example.com"><span class="error"></span></div>
 									<div class="field"><label>الدولة</label><input name="country" placeholder="مثال: مصر"></div>
 									<div class="field"><label>المدينة</label><input name="city" placeholder="مثال: القاهرة"></div>
@@ -206,8 +265,7 @@
 								<h2 class="step-title">الميزانية والموعد</h2>
 								<p class="step-copy">هذه المعلومات تساعدنا على تقديم تصور واقعي.</p>
 								<div class="fields">
-									<div class="field"><label>الميزانية المتوقعة</label><select name="budget"><option>غير محددة</option><option>أقل من 5,000 جنيه</option><option>5,000 - 10,000 جنيه</option><option>10,000 - 20,000 جنيه</option><option>20,000 - 50,000 جنيه</option><option>أكثر من 50,000 جنيه</option></select></div>
-									<div class="field"><label>مدة التنفيذ المطلوبة</label><select name="duration"><option>غير محددة</option><option>أقل من أسبوع</option><option>1 - 2 أسبوع</option><option>2 - 4 أسابيع</option><option>1 - 2 شهر</option><option>أكثر من شهرين</option></select></div>
+									<div class="field"><label>مدة التنفيذ المطلوبة</label><select name="duration"><option>غير محددة</option><option>1 - 2 أسبوع</option><option>2 - 4 أسابيع</option><option>1 - 2 شهر</option><option>أكثر من شهرين</option></select></div>
 									<div class="field"><label>تاريخ التسليم المطلوب</label><input name="deadline" type="date"></div>
 									<div class="field"><label>أولوية المشروع</label><select name="priority"><option>عادية</option><option>مهمة</option><option>عاجلة</option></select></div>
 								</div>
@@ -248,11 +306,13 @@
 									<label>موظف خدمة العملاء <em>*</em></label>
 									<select name="maintenanceSupportAgent">
 										<option value="">اختر الموظف</option>
-										<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
-										<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+										<option value="201147722918">الدعم 1</option>
+										<option value="201117823768">الدعم 2</option>
+										<option value="201557417423">الدعم 3</option>
 									</select>
 									<span class="error"></span>
 								</div>
+									<div class="field full"><label>كود الاستخدام</label><input name="maintenanceUsageCode" placeholder="أدخل كود الاستخدام إن وجد"><span class="error"></span></div>
 							</div>
 						</form>
 						<div class="form-actions">
@@ -286,11 +346,13 @@
 									<label>موظف خدمة العملاء <em>*</em></label>
 									<select name="advertiseSupportAgent">
 										<option value="">اختر الموظف</option>
-										<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
-										<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+										<option value="201147722918">الدعم 1</option>
+										<option value="201117823768">الدعم 2</option>
+										<option value="201557417423">الدعم 3</option>
 									</select>
 									<span class="error"></span>
 								</div>
+									<div class="field full"><label>كود الاستخدام</label><input name="advertiseUsageCode" placeholder="أدخل كود الاستخدام إن وجد"><span class="error"></span></div>
 							</div>
 						</form>
 						<div class="form-actions">
@@ -451,10 +513,11 @@
 	</div>
 
 	<script>
-		const ADMIN_WHATSAPP_NUMBER = "201117823768";
+		const ADMIN_WHATSAPP_NUMBER = "201147722918";
 		const CUSTOMER_SUPPORT_NUMBERS = [
-			{ id: 'agent-01', label: 'موظف خدمة العملاء 1', number: '01117823768' },
-			{ id: 'agent-02', label: 'موظف خدمة العملاء 2', number: '01145475806' }
+			{ id: 'agent-01', label: 'موظف خدمة العملاء 1', number: '201147722918' },
+			{ id: 'agent-02', label: 'موظف خدمة العملاء 2', number: '201117823768' },
+			{ id: 'agent-03', label: 'موظف خدمة العملاء 3', number: '201557417423' }
 		];
 		const STORAGE_KEY = 'amg-dev-project-request';
 		const REQUESTS_KEY = 'amg-dev-requests';
@@ -675,14 +738,15 @@
 		function buildMessage() {
 			const formType = form.dataset.formType || 'project';
 			const services = $$('input[name="services"]:checked').map(item => item.value).join('، ') || 'لا توجد';
+			const usageCode = value('usageCode');
 			const date = new Date();
 			const created = date.toLocaleDateString('ar-EG') + ' — ' + date.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
 			if (formType === 'maintenance') {
 				const customerSupport = form.elements.supportAgent?.value || getSelectedSupportNumber();
-				return '🛠️ *طلب صيانة جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n\n━━━━━━━━━━━━━━━━━━\n\n🔧 *تفاصيل المشكلة*\n\n• 📌 اسم الموقع / التطبيق: '+value('projectName')+'\n• 🗂️ نوع المشكلة: '+value('projectType')+'\n• ⚠️ الأولوية: '+value('priority')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
+				return '🛠️ *طلب صيانة جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n• 🏷️ كود الاستخدام: '+usageCode+'\n\n━━━━━━━━━━━━━━━━━━\n\n🔧 *تفاصيل المشكلة*\n\n• 📌 اسم الموقع / التطبيق: '+value('projectName')+'\n• 🗂️ نوع المشكلة: '+value('projectType')+'\n• ⚠️ الأولوية: '+value('priority')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
 			}
 			const customerSupport = form.elements.supportAgent?.value || getSelectedSupportNumber();
-			return '🚀 *طلب مشروع جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n\n━━━━━━━━━━━━━━━━━━\n\n💻 *تفاصيل المشروع*\n\n• 📌 اسم المشروع: '+value('projectName')+'\n• 🗂️ النوع: '+value('projectType')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🛠️ *الخدمات المطلوبة*\n\n'+services+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
+			return '🚀 *طلب مشروع جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n• 🏷️ كود الاستخدام: '+usageCode+'\n\n━━━━━━━━━━━━━━━━━━\n\n💻 *تفاصيل المشروع*\n\n• 📌 اسم المشروع: '+value('projectName')+'\n• 🗂️ النوع: '+value('projectType')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🛠️ *الخدمات المطلوبة*\n\n'+services+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
 		}
 
 		// ===== نظام المحفظة =====
@@ -919,6 +983,7 @@
 					fullName: value('fullName'),
 					phone: value('phone'),
 					whatsapp: value('whatsapp'),
+									usageCode: value('usageCode'),
 					email: value('email'),
 					country: value('country'),
 					city: value('city'),
@@ -927,7 +992,6 @@
 					description: value('description'),
 					features: value('features'),
 					reference: value('reference'),
-					budget: value('budget'),
 					duration: value('duration'),
 					deadline: value('deadline'),
 					priority: value('priority'),
@@ -993,6 +1057,7 @@
 			const site = formEl.elements.maintenanceSite.value.trim();
 			const type = formEl.elements.maintenanceType.value.trim();
 			const description = formEl.elements.maintenanceDescription.value.trim();
+			const usageCode = formEl.elements.maintenanceUsageCode.value.trim();
 			const agent = formEl.elements.maintenanceSupportAgent.value.trim();
 			if (!name || !phone || !whatsapp || !site || !type || !description || !agent) {
 				showToast('❌ يرجى ملء جميع الحقول المطلوبة');
@@ -1000,7 +1065,7 @@
 			}
 			orderId = makeOrderId();
 			$('#successOrderId').textContent = orderId;
-			const message = '🛠️ *طلب صيانة جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n📌 *اسم الموقع/التطبيق:* ' + site + '\n🧩 *نوع المشكلة:* ' + type + '\n📝 *الوصف:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
+			const message = '🛠️ *طلب صيانة جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n🏷️ *كود الاستخدام:* ' + (usageCode || 'لا يوجد') + '\n📌 *اسم الموقع/التطبيق:* ' + site + '\n🧩 *نوع المشكلة:* ' + type + '\n📝 *الوصف:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
 			window.open('https://wa.me/' + normalizeWhatsAppNumber(agent) + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
 			openScreen('successScreen');
 			showToast('✅ تم إرسال طلب الصيانة للموظف المختار');
@@ -1023,6 +1088,7 @@
 			const type = formEl.elements.advertiseType.value.trim();
 			const description = formEl.elements.advertiseDescription.value.trim();
 			const duration = formEl.elements.advertiseDuration.value.trim();
+			const usageCode = formEl.elements.advertiseUsageCode.value.trim();
 			const agent = formEl.elements.advertiseSupportAgent.value.trim();
 			if (!name || !phone || !whatsapp || !brand || !type || !description || !duration || !agent) {
 				showToast('❌ يرجى ملء جميع الحقول المطلوبة');
@@ -1030,7 +1096,7 @@
 			}
 			orderId = makeOrderId();
 			$('#successOrderId').textContent = orderId;
-			const message = '📢 *طلب إعلان جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n🏢 *العلامة/الشركة:* ' + brand + '\n🧩 *نوع الإعلان:* ' + type + '\n⏱️ *مدة الإعلان:* ' + duration + '\n📝 *وصف الحملة:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
+			const message = '📢 *طلب إعلان جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n🏷️ *كود الاستخدام:* ' + (usageCode || 'لا يوجد') + '\n🏢 *العلامة/الشركة:* ' + brand + '\n🧩 *نوع الإعلان:* ' + type + '\n⏱️ *مدة الإعلان:* ' + duration + '\n📝 *وصف الحملة:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
 			window.open('https://wa.me/' + normalizeWhatsAppNumber(agent) + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
 			openScreen('successScreen');
 			showToast('✅ تم إرسال طلب الإعلان للموظف المختار');
@@ -1172,6 +1238,97 @@
 			updateWalletBadge();
 			renderWalletScreen();
 		};
+
+		function startCinematicIntro() {
+			const intro = $('#cinematicIntro');
+			const canvas = $('#introCanvas');
+			if (!intro || !canvas) return;
+			const context = canvas.getContext('2d');
+			const compact = window.matchMedia('(max-width: 600px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const particles = [];
+			let animationFrame;
+			let startedAt = performance.now();
+			let finished = false;
+			const particleCount = compact ? 42 : 92;
+
+			function resizeCanvas() {
+				const ratio = Math.min(window.devicePixelRatio || 1, 2);
+				canvas.width = Math.floor(window.innerWidth * ratio);
+				canvas.height = Math.floor(window.innerHeight * ratio);
+				canvas.style.width = window.innerWidth + 'px';
+				canvas.style.height = window.innerHeight + 'px';
+				context.setTransform(ratio, 0, 0, ratio, 0, 0);
+			}
+
+			function resetParticle(particle) {
+				const edge = Math.random() > .5;
+				particle.x = edge ? (Math.random() > .5 ? -30 : window.innerWidth + 30) : Math.random() * window.innerWidth;
+				particle.y = edge ? Math.random() * window.innerHeight : (Math.random() > .5 ? -30 : window.innerHeight + 30);
+				particle.originX = window.innerWidth / 2 + (Math.random() - .5) * Math.min(window.innerWidth * .4, 320);
+				particle.originY = window.innerHeight / 2 + (Math.random() - .5) * Math.min(window.innerHeight * .32, 220);
+				particle.vx = (window.innerWidth / 2 - particle.x) * .0015 + (Math.random() - .5) * 2;
+				particle.vy = (window.innerHeight / 2 - particle.y) * .0015 + (Math.random() - .5) * 2;
+				particle.size = Math.random() * 1.8 + .5;
+				particle.alpha = Math.random();
+				particle.color = Math.random() > .52 ? '55,190,255' : '255,112,58';
+			}
+
+			function finishIntro() {
+				if (finished) return;
+				finished = true;
+				cancelAnimationFrame(animationFrame);
+				intro.classList.add('is-done');
+				setTimeout(() => intro.remove(), 900);
+			}
+
+			function render(now) {
+				if (finished) return;
+				const elapsed = (now - startedAt) / 1000;
+				const progress = Math.min(elapsed / 4.3, 1);
+				const convergence = Math.min(Math.max((elapsed - .7) / 1.15, 0), 1);
+				const burst = Math.min(Math.max((elapsed - 3.35) / .8, 0), 1);
+				context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+				particles.forEach(particle => {
+					if (elapsed < .72) {
+						particle.x += particle.vx * 2.2;
+						particle.y += particle.vy * 2.2;
+						particle.alpha = Math.min(1, particle.alpha + .018);
+					} else if (elapsed < 3.35) {
+						particle.x += (particle.originX - particle.x) * (.018 + convergence * .06);
+						particle.y += (particle.originY - particle.y) * (.018 + convergence * .06);
+						particle.alpha = Math.min(1, particle.alpha + .025);
+					} else {
+						particle.x += (particle.x - window.innerWidth / 2) * (.018 + burst * .12);
+						particle.y += (particle.y - window.innerHeight / 2) * (.018 + burst * .12);
+						particle.alpha = Math.max(0, particle.alpha - .025);
+					}
+					context.beginPath();
+					context.fillStyle = 'rgba(' + particle.color + ',' + particle.alpha * (1 - progress * .35) + ')';
+					context.shadowBlur = particle.size * 5;
+					context.shadowColor = 'rgba(' + particle.color + ',.8)';
+					context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+					context.fill();
+				});
+				context.shadowBlur = 0;
+				if (elapsed >= 4.3) finishIntro();
+				else animationFrame = requestAnimationFrame(render);
+			}
+
+			resizeCanvas();
+			for (let index = 0; index < particleCount; index++) {
+				const particle = {};
+				resetParticle(particle);
+				particles.push(particle);
+			}
+			window.addEventListener('resize', resizeCanvas, { passive:true });
+			intro.addEventListener('click', finishIntro, { once:true });
+			window.addEventListener('keydown', event => {
+				if (event.key === 'Escape' || event.key === 'Enter') finishIntro();
+			});
+			animationFrame = requestAnimationFrame(render);
+		}
+
+		startCinematicIntro();
 
 		// Form Events
 		form.addEventListener('input', saveDraft);
