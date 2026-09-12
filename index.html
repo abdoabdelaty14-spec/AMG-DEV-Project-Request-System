@@ -5,10 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="AMG DEV — Project Request System, Wallet, Tracking & Client Dashboard">
 <meta name="theme-color" content="#03070f">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+
 <title>AMG DEV | Project Request System</title>
+
+<!-- ===== PWA / Icons / Social ===== -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M100 16 L170 64 L140 164 L60 164 L30 64 Z' fill='%230b2f4f'/%3E%3Cpath d='M100 34 L150 67 L122 146 L78 146 L50 67 Z' fill='%231ec5ff'/%3E%3Ctext x='100' y='118' text-anchor='middle' font-size='72' font-family='Arial' font-weight='800' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%230b2f4f'/%3E%3Ctext x='100' y='130' text-anchor='middle' font-size='100' font-family='Arial' font-weight='800' fill='%231ec5ff'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href='data:application/manifest+json,{"name":"AMG DEV","short_name":"AMG","start_url":"./","display":"standalone","orientation":"portrait","background_color":"%2303070f","theme_color":"%2303070f","lang":"ar","dir":"rtl"}'>
+<link rel="canonical" href="./">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="AMG DEV | Project Request System">
+<meta property="og:description" content="Turn your idea into a digital product — request, track, and manage your project with AMG DEV.">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AMG DEV | Project Request System">
+<meta name="twitter:description" content="Turn your idea into a digital product — request, track, and manage your project with AMG DEV.">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"AMG DEV",
+  "description":"Software development studio — web, mobile, UI/UX, e-commerce and AI solutions.",
+  "slogan":"Build • Manage • Deliver",
+  "areaServed":"Worldwide",
+  "contactPoint":[{
+    "@type":"ContactPoint",
+    "contactType":"customer support",
+    "telephone":"+201147722918",
+    "availableLanguage":["Arabic","English"]
+  }]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
 <style>
 /* ==========================================================
    DESIGN TOKENS
@@ -83,9 +120,28 @@ ul{margin:0;padding:0;list-style:none}
 main{flex:1}
 
 /* ==========================================================
-   🎬 CINEMATIC INTRO — ORIGINAL DESIGN
-   (Dark navy/black + blue & orange light streaks,
-    AMG logo assemble, ring orbit, flare burst)
+   ACCESSIBILITY HELPERS
+   ========================================================== */
+.skip-link{
+  position:absolute;top:-100px;inset-inline-start:12px;z-index:3000;
+  padding:12px 18px;border-radius:0 0 14px 14px;
+  background:var(--green);color:#fff;font-weight:800;font-size:13px;
+  transition:top .22s var(--ease);
+}
+.skip-link:focus{top:0}
+.sr-only{
+  position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.noscript{
+  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
+  padding:24px;background:#03070f;color:#f4f8ff;text-align:center;
+}
+.noscript h1{font-size:24px;margin-bottom:12px}
+.noscript p{color:#9fb3c8;font-size:14px;line-height:1.9;max-width:440px}
+
+/* ==========================================================
+   🎬 CINEMATIC INTRO
    ========================================================== */
 .cinematic-intro{
   position:fixed;inset:0;z-index:2000;overflow:hidden;
@@ -389,6 +445,7 @@ main{flex:1}
 .secondary{color:var(--ink);background:var(--surface);border:1px solid var(--line)}
 .secondary:hover{transform:translateY(-3px);border-color:var(--green);color:var(--green);box-shadow:var(--shadow-sm)}
 .primary:active,.secondary:active{transform:translateY(-1px)}
+.primary:disabled,.secondary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .ripple-ink{
   position:absolute;border-radius:50%;transform:scale(0);
   background:currentColor;opacity:.22;pointer-events:none;
@@ -772,6 +829,10 @@ input:focus,textarea:focus,select:focus{
   border-color:var(--green);background:var(--surface);
   box-shadow:0 0 0 4px var(--mint);
 }
+input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="true"]{
+  border-color:var(--danger);
+  box-shadow:0 0 0 3px rgba(196,82,61,.14);
+}
 .error{color:var(--danger);min-height:14px;font-size:10.5px;font-weight:600}
 .check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .check{
@@ -792,6 +853,37 @@ input:focus,textarea:focus,select:focus{
 .rev-grid > div.full{grid-column:1/-1}
 .rev-grid small{display:block;margin-bottom:3px;color:var(--muted);font-size:10.5px;font-weight:600}
 .rev-grid p{word-break:break-word}
+
+/* Phone row (country code + number) */
+.phone-row{display:grid;grid-template-columns:112px 1fr;gap:8px}
+.phone-row select{padding:12px 8px;text-align:center}
+@media (max-width:420px){
+  .phone-row{grid-template-columns:96px 1fr}
+}
+
+/* Attachments */
+.file-input{
+  padding:10px 12px;background:var(--surface-2);
+  border:1.5px dashed var(--line);border-radius:12px;font-size:12px;
+  cursor:pointer;
+}
+.file-input:hover{border-color:var(--green)}
+.attachment-list{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;
+}
+.attachment-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:999px;
+  background:var(--mint);color:var(--green);
+  font-size:11px;font-weight:700;max-width:100%;
+}
+.attachment-chip button{
+  color:var(--green);font-size:14px;line-height:1;opacity:.7;
+  transition:opacity .2s var(--ease);
+}
+.attachment-chip button:hover{opacity:1}
+.attachment-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}
+.form-hint{color:var(--muted);font-size:10.5px;font-weight:500;line-height:1.7}
 
 /* ==========================================================
    SUCCESS
@@ -815,6 +907,12 @@ input:focus,textarea:focus,select:focus{
 .order-box small{display:block;margin-bottom:8px;color:var(--green);font-size:11px;font-weight:700;letter-spacing:.5px}
 .order-id{direction:ltr;font:800 clamp(19px,3.4vw,27px)/1 Manrope,sans-serif;letter-spacing:1px;color:var(--green)}
 .success-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.wa-fallback{
+  margin-top:14px;padding:14px 18px;border-radius:14px;
+  background:var(--bg-soft);border:1px solid var(--line);
+  font-size:12.5px;color:var(--muted);text-align:center;
+}
+.wa-fallback a{color:var(--green);font-weight:800;word-break:break-all}
 
 /* ==========================================================
    WALLET
@@ -871,6 +969,15 @@ input:focus,textarea:focus,select:focus{
 .use-points-button:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 20px 40px rgba(8,127,114,.32)}
 .use-points-button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 #usePointsInfo{text-align:center;color:var(--muted);font-size:11.5px;margin-top:10px;font-weight:600}
+.wallet-actions-row{
+  display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap;
+}
+.wallet-actions-row button{
+  padding:9px 16px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--muted);font-weight:700;font-size:11.5px;
+  transition:border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease);
+}
+.wallet-actions-row button:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
 .wallet-history h3{margin-bottom:18px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
 .history-list{display:grid;gap:10px}
 .history-list li{
@@ -890,6 +997,7 @@ input:focus,textarea:focus,select:focus{
 .type-credit,.status-done{background:var(--mint);color:var(--green)}
 .type-debit,.status-rejected{background:rgba(239,128,94,.16);color:var(--orange)}
 .status-pending{background:rgba(245,203,111,.24);color:#9c7a17}
+.status-cancelled{background:rgba(196,82,61,.14);color:var(--danger)}
 [data-theme="dark"] .status-pending{color:var(--gold)}
 
 /* ==========================================================
@@ -917,6 +1025,43 @@ input:focus,textarea:focus,select:focus{
 }
 .track-summary h3{margin-bottom:8px;color:var(--green);font-size:18px;direction:ltr;text-align:start;font-family:Manrope,sans-serif}
 .track-summary p{color:var(--muted);font-size:12px;line-height:1.9}
+.track-summary .order-code-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.track-summary .order-code-row h3{
+  margin:0;
+}
+.track-summary .delivered-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:5px 12px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.4px;
+  box-shadow:0 8px 18px rgba(8,127,114,.22);
+  white-space:nowrap;
+}
+.track-summary .delivered-chip::before{
+  content:"✓";
+  font-size:11px;
+  line-height:1;
+}
+.track-summary .cancelled-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 12px;border-radius:999px;
+  background:linear-gradient(135deg,var(--danger),#a13a2a);
+  color:#fff;font-size:10px;font-weight:800;letter-spacing:.4px;
+  white-space:nowrap;
+}
+.track-summary .cancelled-chip::before{content:"✕";font-size:11px;line-height:1}
 .detail-list{display:grid;gap:9px}
 .detail-item{
   display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
@@ -946,6 +1091,7 @@ input:focus,textarea:focus,select:focus{
   border-color:transparent;color:#fff;box-shadow:0 8px 18px rgba(8,127,114,.28);
 }
 .tl-step.current .tl-dot{background:var(--mint);border-color:var(--green);color:var(--green);animation:pulseDot 2s infinite}
+.tl-step.cancelled .tl-dot{background:rgba(196,82,61,.14);border-color:var(--danger);color:var(--danger)}
 @keyframes pulseDot{
   0%{box-shadow:0 0 0 0 rgba(8,127,114,.35)}
   70%{box-shadow:0 0 0 12px rgba(8,127,114,0)}
@@ -954,7 +1100,15 @@ input:focus,textarea:focus,select:focus{
 .tl-body{padding-top:5px}
 .tl-body strong{display:block;font-size:13px}
 .tl-body span{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
-.tl-step:not(.done):not(.current) .tl-body strong{color:var(--muted);font-weight:600}
+.tl-step:not(.done):not(.current):not(.cancelled) .tl-body strong{color:var(--muted);font-weight:600}
+.track-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.track-actions button{
+  padding:10px 16px;border-radius:12px;font-weight:700;font-size:12px;
+  border:1px solid var(--line);background:var(--surface);color:var(--muted);
+  transition:border-color .2s var(--ease),color .2s var(--ease),transform .2s var(--ease);
+}
+.track-actions button:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+.track-actions button.danger:hover{border-color:var(--danger);color:var(--danger)}
 
 /* ==========================================================
    DASHBOARD
@@ -1013,6 +1167,21 @@ input:focus,textarea:focus,select:focus{
 .dash-empty .de-icon{font-size:44px;margin-bottom:14px;opacity:.55}
 .dash-empty h4{margin-bottom:8px;color:var(--ink);font-size:15px}
 .dash-empty p{margin-bottom:18px;font-size:12.5px}
+
+/* ==========================================================
+   ADMIN (demo, hash-gated)
+   ========================================================== */
+.admin-row{
+  display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;
+  padding:14px;border:1px solid var(--line);border-radius:14px;
+  background:var(--surface-2);margin-bottom:10px;
+}
+.admin-row .code{direction:ltr;font-family:Manrope,sans-serif;font-weight:800;color:var(--green);font-size:12px}
+.admin-row small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px}
+.admin-row select{max-width:210px;padding:9px 10px;font-size:12px}
+.admin-row button{padding:9px 13px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:11.5px;font-weight:700}
+.admin-row button:hover{border-color:var(--green);color:var(--green)}
+.admin-row button.danger:hover{border-color:var(--danger);color:var(--danger)}
 
 /* ==========================================================
    MODALS & TOAST
@@ -1078,6 +1247,7 @@ footer{
   padding-top:22px;border-top:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:center;gap:18px;
   color:var(--muted);font-size:11.5px;position:relative;z-index:1;
+  flex-wrap:wrap;
 }
 .footer-brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink)}
 .footer-brand .mini-mark{
@@ -1087,6 +1257,12 @@ footer{
 }
 .footer-brand .mini-mark svg{width:100%;height:100%}
 .footer-brand-name{font:800 12px Manrope,sans-serif;letter-spacing:.7px}
+.footer-links{display:flex;gap:14px;flex-wrap:wrap}
+.footer-links button{
+  color:var(--muted);font-size:11.5px;font-weight:600;
+  transition:color .2s var(--ease);
+}
+.footer-links button:hover{color:var(--green)}
 #amgFloatingSupport{
   position:fixed;inset-inline-end:22px;bottom:22px;z-index:1200;
   width:56px;height:56px;border-radius:50%;
@@ -1192,6 +1368,7 @@ footer{
   .rev-grid{grid-template-columns:1fr}
   .amg-bottom-nav button{font-size:9px}
   .amg-bottom-nav button i{font-size:16px}
+  .admin-row{grid-template-columns:1fr;gap:8px}
 }
 @media (max-width:380px){
   .header-actions{gap:6px}
@@ -1208,15 +1385,52 @@ footer{
   }
   html{scroll-behavior:auto}
 }
+
+/* ==========================================================
+   PHASE 1 ENHANCEMENTS — ADMIN / ACTIVITY / REQUEST DETAILS
+   ========================================================== */
+.admin-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.admin-kpi{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.admin-kpi strong{display:block;font-size:26px;letter-spacing:-.03em;color:var(--ink)}
+.admin-kpi span{display:block;margin-top:5px;font-size:11px;color:var(--muted);font-weight:700}
+.admin-kpi .kpi-icon{font-size:18px;margin-bottom:8px}
+.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.admin-toolbar input,.admin-toolbar select{min-height:42px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;padding:0 12px;font:inherit;font-size:12px;outline:none}
+.admin-toolbar input{flex:1 1 260px}
+.admin-toolbar select{flex:0 0 190px}
+.admin-toolbar input:focus,.admin-toolbar select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(30,197,255,.10)}
+.admin-row{transition:transform .18s ease,box-shadow .18s ease}
+.admin-row:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.04)}
+.admin-row .actions{display:flex;gap:6px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.admin-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
+.admin-detail{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2,var(--surface))}
+.admin-detail span{display:block;color:var(--muted);font-size:10px;font-weight:700;margin-bottom:4px}
+.admin-detail strong{display:block;font-size:12px;line-height:1.6;word-break:break-word}
+.activity-list{display:grid;gap:9px;margin-top:14px}
+.activity-item{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.activity-dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:6px;flex:0 0 auto}
+.activity-item strong{display:block;font-size:11.5px}.activity-item small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.modal-wide{width:min(760px,calc(100vw - 28px))}
+@media(max-width:900px){.admin-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-details-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.admin-overview{grid-template-columns:1fr 1fr}.admin-kpi{padding:14px}.admin-kpi strong{font-size:21px}}
+
 </style>
 </head>
 <body>
 
+<noscript>
+  <div class="noscript">
+    <h1>AMG DEV</h1>
+    <p>This application requires JavaScript to be enabled. Please enable JavaScript in your browser settings and reload the page.</p>
+  </div>
+</noscript>
+
+<a href="#main" class="skip-link">تخطي إلى المحتوى الرئيسي / Skip to main content</a>
+
 <div class="shell">
 
   <!-- ==========================================================
-       🎬 CINEMATIC INTRO — ORIGINAL AMG PRESENTATION
-       Plays every visit, click / Esc / Enter to skip.
+       🎬 CINEMATIC INTRO
        ========================================================== -->
   <div class="cinematic-intro" id="cinematicIntro" role="presentation" aria-label="AMG">
     <div class="intro-space"></div>
@@ -1317,7 +1531,7 @@ footer{
     </div>
   </header>
 
-  <main>
+  <main id="main">
 
     <!-- ==================== HOME ==================== -->
     <section class="screen active" id="homeScreen">
@@ -1364,7 +1578,7 @@ footer{
           </div>
         </div>
 
-        <!-- HERO ART — Content boxes -->
+        <!-- HERO ART -->
         <div class="hero-art">
           <div class="art-top">
             <span class="art-dots" aria-hidden="true"></span>
@@ -1372,7 +1586,6 @@ footer{
           </div>
 
           <div class="art-grid">
-            <!-- Project Progress -->
             <div class="art-box art-progress">
               <div class="art-box-head">
                 <span class="art-box-icon" aria-hidden="true">📊</span>
@@ -1385,25 +1598,21 @@ footer{
               <div class="art-bar" aria-hidden="true"><i></i></div>
             </div>
 
-            <!-- Design -->
             <div class="art-box art-mini">
               <span class="art-box-icon" aria-hidden="true">🎨</span>
               <span class="art-box-title" data-i18n="art.design">تصميم</span>
             </div>
 
-            <!-- Implementation -->
             <div class="art-box art-mini">
               <span class="art-box-icon" aria-hidden="true">⚙️</span>
               <span class="art-box-title" data-i18n="art.implementation">تنفيذ</span>
             </div>
 
-            <!-- Luxury Offices -->
             <div class="art-box art-rent">
               <span class="rent-tag" data-i18n="art.forRent">FOR RENT</span>
               <span class="rent-name" data-i18n="art.luxury">مكاتب فاخرة</span>
             </div>
 
-            <!-- Prime Villas -->
             <div class="art-box art-rent">
               <span class="rent-tag" data-i18n="art.forRent">FOR RENT</span>
               <span class="rent-name" data-i18n="art.villas">فيلات مميزة</span>
@@ -1667,142 +1876,203 @@ footer{
 
         <div class="form-card">
           <form id="requestForm" novalidate data-form-type="project">
-            <!-- Step 1 -->
             <div class="step-pane active" data-step="1">
               <h2 class="step-title" data-i18n="f.s1.title">بيانات العميل</h2>
               <p class="step-copy" data-i18n="f.s1.desc">نحتاج بعض المعلومات الأساسية لنتواصل معك.</p>
               <div class="fields">
                 <div class="field">
-                  <label data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
-                  <input name="fullName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد">
-                  <span class="error"></span>
+                  <label for="fullName" data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
+                  <input id="fullName" name="fullName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد" autocomplete="name">
+                  <span class="error" id="err-fullName"></span>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.phone">رقم الهاتف <em>*</em></label>
-                  <input name="phone" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
-                  <span class="error"></span>
+                  <label for="phone" data-i18n="f.phone">رقم الهاتف <em>*</em></label>
+                  <div class="phone-row">
+                    <select name="phoneCC" aria-label="Country code">
+                      <option value="+20">🇪🇬 +20</option>
+                      <option value="+966">🇸🇦 +966</option>
+                      <option value="+971">🇦🇪 +971</option>
+                      <option value="+965">🇰🇼 +965</option>
+                      <option value="+974">🇶🇦 +974</option>
+                      <option value="+973">🇧🇭 +973</option>
+                      <option value="+968">🇴🇲 +968</option>
+                      <option value="+962">🇯🇴 +962</option>
+                      <option value="+961">🇱🇧 +961</option>
+                      <option value="+964">🇮🇶 +964</option>
+                      <option value="+212">🇲🇦 +212</option>
+                      <option value="+213">🇩🇿 +213</option>
+                      <option value="+216">🇹🇳 +216</option>
+                      <option value="+218">🇱🇾 +218</option>
+                      <option value="+249">🇸🇩 +249</option>
+                      <option value="+1">🇺🇸 +1</option>
+                      <option value="+44">🇬🇧 +44</option>
+                      <option value="+49">🇩🇪 +49</option>
+                      <option value="+33">🇫🇷 +33</option>
+                      <option value="+90">🇹🇷 +90</option>
+                    </select>
+                    <input id="phone" name="phone" type="tel" data-i18n-ph="ph.phone" placeholder="1012345678" autocomplete="tel-national" inputmode="tel">
+                  </div>
+                  <span class="error" id="err-phone"></span>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
-                  <input name="whatsapp" type="tel" data-i18n-ph="ph.whatsapp" placeholder="الرقم الذي سنراسلك عليه">
-                  <span class="error"></span>
+                  <label for="whatsapp" data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
+                  <div class="phone-row">
+                    <select name="whatsappCC" aria-label="WhatsApp country code">
+                      <option value="+20">🇪🇬 +20</option>
+                      <option value="+966">🇸🇦 +966</option>
+                      <option value="+971">🇦🇪 +971</option>
+                      <option value="+965">🇰🇼 +965</option>
+                      <option value="+974">🇶🇦 +974</option>
+                      <option value="+973">🇧🇭 +973</option>
+                      <option value="+968">🇴🇲 +968</option>
+                      <option value="+962">🇯🇴 +962</option>
+                      <option value="+961">🇱🇧 +961</option>
+                      <option value="+964">🇮🇶 +964</option>
+                      <option value="+212">🇲🇦 +212</option>
+                      <option value="+213">🇩🇿 +213</option>
+                      <option value="+216">🇹🇳 +216</option>
+                      <option value="+218">🇱🇾 +218</option>
+                      <option value="+249">🇸🇩 +249</option>
+                      <option value="+1">🇺🇸 +1</option>
+                      <option value="+44">🇬🇧 +44</option>
+                      <option value="+49">🇩🇪 +49</option>
+                      <option value="+33">🇫🇷 +33</option>
+                      <option value="+90">🇹🇷 +90</option>
+                    </select>
+                    <input id="whatsapp" name="whatsapp" type="tel" data-i18n-ph="ph.phone" placeholder="1012345678" autocomplete="tel-national" inputmode="tel">
+                  </div>
+                  <span class="error" id="err-whatsapp"></span>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
-                  <select name="supportAgent">
+                  <label for="supportAgent" data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
+                  <select id="supportAgent" name="supportAgent">
                     <option value="" data-i18n="opt.chooseAgent">اختر الموظف</option>
                     <option value="201147722918" data-i18n="opt.agent1">الدعم 1</option>
                     <option value="201117823768" data-i18n="opt.agent2">الدعم 2</option>
                     <option value="201557417423" data-i18n="opt.agent3">الدعم 3</option>
                   </select>
-                  <span class="error"></span>
+                  <span class="error" id="err-supportAgent"></span>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.usageCode">كود الاستخدام</label>
-                  <input name="usageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
-                  <span class="error"></span>
+                  <label for="usageCode" data-i18n="f.usageCode">كود الاستخدام</label>
+                  <input id="usageCode" name="usageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
+                  <span class="error" id="err-usageCode"></span>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.email">البريد الإلكتروني</label>
-                  <input name="email" type="email" data-i18n-ph="ph.email" placeholder="name@example.com">
-                  <span class="error"></span>
+                  <label for="email" data-i18n="f.email">البريد الإلكتروني</label>
+                  <input id="email" name="email" type="email" data-i18n-ph="ph.email" placeholder="name@example.com" autocomplete="email">
+                  <span class="error" id="err-email"></span>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.country">الدولة</label>
-                  <input name="country" data-i18n-ph="ph.country" placeholder="مثال: مصر">
+                  <label for="country" data-i18n="f.country">الدولة</label>
+                  <input id="country" name="country" data-i18n-ph="ph.country" placeholder="مثال: مصر" autocomplete="country-name">
                 </div>
                 <div class="field">
-                  <label data-i18n="f.city">المدينة</label>
-                  <input name="city" data-i18n-ph="ph.city" placeholder="مثال: القاهرة">
+                  <label for="city" data-i18n="f.city">المدينة</label>
+                  <input id="city" name="city" data-i18n-ph="ph.city" placeholder="مثال: القاهرة" autocomplete="address-level2">
                 </div>
               </div>
             </div>
 
-            <!-- Step 2 -->
             <div class="step-pane" data-step="2">
               <h2 class="step-title" data-i18n="f.s2.title">معلومات المشروع</h2>
               <p class="step-copy" data-i18n="f.s2.desc">ما الشيء الذي تريد أن نبنيه معًا؟</p>
               <div class="fields">
                 <div class="field full">
-                  <label data-i18n="f.projectName">اسم المشروع <em>*</em></label>
-                  <input name="projectName" data-i18n-ph="ph.projectName" placeholder="مثال: منصة تعليمية">
-                  <span class="error"></span>
+                  <label for="projectName" data-i18n="f.projectName">اسم المشروع <em>*</em></label>
+                  <input id="projectName" name="projectName" data-i18n-ph="ph.projectName" placeholder="مثال: منصة تعليمية">
+                  <span class="error" id="err-projectName"></span>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.projectType">نوع المشروع <em>*</em></label>
-                  <select name="projectType">
+                  <label for="projectType" data-i18n="f.projectType">نوع المشروع <em>*</em></label>
+                  <select id="projectType" name="projectType">
                     <option value="" data-i18n="opt.chooseType">اختر نوع المشروع</option>
-                    <option value="موقع إلكتروني" data-i18n="opt.website">موقع إلكتروني</option>
-                    <option value="متجر إلكتروني" data-i18n="opt.store">متجر إلكتروني</option>
-                    <option value="تطبيق موبايل" data-i18n="opt.mobile">تطبيق موبايل</option>
-                    <option value="منصة ويب" data-i18n="opt.platform">منصة ويب</option>
-                    <option value="نظام إدارة" data-i18n="opt.erp">نظام إدارة</option>
-                    <option value="برنامج Desktop" data-i18n="opt.desktop">برنامج Desktop</option>
-                    <option value="تصميم UI/UX" data-i18n="opt.uiux">تصميم UI/UX</option>
-                    <option value="مشروع برمجي مخصص" data-i18n="opt.custom">مشروع برمجي مخصص</option>
-                    <option value="أخرى" data-i18n="opt.other">أخرى</option>
+                    <option value="website" data-i18n="opt.website">موقع إلكتروني</option>
+                    <option value="store" data-i18n="opt.store">متجر إلكتروني</option>
+                    <option value="mobile" data-i18n="opt.mobile">تطبيق موبايل</option>
+                    <option value="platform" data-i18n="opt.platform">منصة ويب</option>
+                    <option value="erp" data-i18n="opt.erp">نظام إدارة</option>
+                    <option value="desktop" data-i18n="opt.desktop">برنامج Desktop</option>
+                    <option value="uiux" data-i18n="opt.uiux">تصميم UI/UX</option>
+                    <option value="custom" data-i18n="opt.custom">مشروع برمجي مخصص</option>
+                    <option value="other" data-i18n="opt.other">أخرى</option>
                   </select>
-                  <span class="error"></span>
+                  <span class="error" id="err-projectType"></span>
                 </div>
               </div>
             </div>
 
-            <!-- Step 3 -->
             <div class="step-pane" data-step="3">
               <h2 class="step-title" data-i18n="f.s3.title">تفاصيل المشروع</h2>
               <p class="step-copy" data-i18n="f.s3.desc">اشرح لنا الفكرة بالتفصيل والمميزات المطلوبة.</p>
               <div class="fields">
                 <div class="field full">
-                  <label data-i18n="f.description">وصف المشروع <em>*</em></label>
-                  <textarea name="description" data-i18n-ph="ph.description" placeholder="اشرح لنا فكرة المشروع بالتفصيل..."></textarea>
-                  <span class="error"></span>
+                  <label for="description" data-i18n="f.description">وصف المشروع <em>*</em></label>
+                  <textarea id="description" name="description" data-i18n-ph="ph.description" placeholder="اشرح لنا فكرة المشروع بالتفصيل..."></textarea>
+                  <span class="error" id="err-description"></span>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.services">الخدمات المطلوبة</label>
-                  <div class="check-grid"></div>
+                  <span class="sr-only" id="servicesLabel" data-i18n="f.services">الخدمات المطلوبة</span>
+                  <label aria-hidden="true" data-i18n="f.services">الخدمات المطلوبة</label>
+                  <div class="check-grid" role="group" aria-labelledby="servicesLabel"></div>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.features">المميزات المطلوبة</label>
-                  <textarea name="features" data-i18n-ph="ph.features" placeholder="مثال: نظام دفع + لوحة تحكم + إرسال تنبيهات"></textarea>
+                  <label for="features" data-i18n="f.features">المميزات المطلوبة</label>
+                  <textarea id="features" name="features" data-i18n-ph="ph.features" placeholder="مثال: نظام دفع + لوحة تحكم + إرسال تنبيهات"></textarea>
                 </div>
                 <div class="field full">
-                  <label data-i18n="f.reference">رابط مرجعي</label>
-                  <input name="reference" data-i18n-ph="ph.reference" placeholder="ضع رابط موقع أو تصميم مشابه إن وجد">
+                  <label for="reference" data-i18n="f.reference">رابط مرجعي</label>
+                  <input id="reference" name="reference" data-i18n-ph="ph.reference" placeholder="ضع رابط موقع أو تصميم مشابه إن وجد">
+                </div>
+                <div class="field full">
+                  <label for="attachments" data-i18n="f.attachments">ملفات مرجعية</label>
+                  <input id="attachments" class="file-input" name="attachments" type="file" multiple accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt">
+                  <p class="form-hint" data-i18n="f.attachmentsHint">سيتم ذكر أسماء الملفات في الطلب. أرسل الملفات نفسها عبر محادثة WhatsApp بعد الإرسال.</p>
+                  <div class="attachment-list" id="attachmentList"></div>
                 </div>
               </div>
             </div>
 
-            <!-- Step 4 -->
             <div class="step-pane" data-step="4">
               <h2 class="step-title" data-i18n="f.s4.title">الميزانية والموعد</h2>
               <p class="step-copy" data-i18n="f.s4.desc">هذه المعلومات تساعدنا على تقديم تصور واقعي.</p>
               <div class="fields">
                 <div class="field">
-                  <label data-i18n="f.duration">مدة التنفيذ المطلوبة</label>
-                  <select name="duration">
-                    <option value="غير محددة" data-i18n="opt.dur0">غير محددة</option>
-                    <option value="1 - 2 أسبوع" data-i18n="opt.dur1">1 - 2 أسبوع</option>
-                    <option value="2 - 4 أسابيع" data-i18n="opt.dur2">2 - 4 أسابيع</option>
-                    <option value="1 - 2 شهر" data-i18n="opt.dur3">1 - 2 شهر</option>
-                    <option value="أكثر من شهرين" data-i18n="opt.dur4">أكثر من شهرين</option>
+                  <label for="budget" data-i18n="f.budget">الميزانية التقديرية</label>
+                  <select id="budget" name="budget">
+                    <option value="not_specified" data-i18n="opt.budget0">غير محددة</option>
+                    <option value="under_5k" data-i18n="opt.budget1">أقل من 5,000</option>
+                    <option value="5k_15k" data-i18n="opt.budget2">5,000 – 15,000</option>
+                    <option value="15k_50k" data-i18n="opt.budget3">15,000 – 50,000</option>
+                    <option value="50k_100k" data-i18n="opt.budget4">50,000 – 100,000</option>
+                    <option value="over_100k" data-i18n="opt.budget5">أكثر من 100,000</option>
                   </select>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.deadline">تاريخ التسليم المطلوب</label>
-                  <input name="deadline" type="date">
+                  <label for="duration" data-i18n="f.duration">مدة التنفيذ المطلوبة</label>
+                  <select id="duration" name="duration">
+                    <option value="not_specified" data-i18n="opt.dur0">غير محددة</option>
+                    <option value="1_2_weeks" data-i18n="opt.dur1">1 - 2 أسبوع</option>
+                    <option value="2_4_weeks" data-i18n="opt.dur2">2 - 4 أسابيع</option>
+                    <option value="1_2_months" data-i18n="opt.dur3">1 - 2 شهر</option>
+                    <option value="over_2_months" data-i18n="opt.dur4">أكثر من شهرين</option>
+                  </select>
                 </div>
                 <div class="field">
-                  <label data-i18n="f.priority">أولوية المشروع</label>
-                  <select name="priority">
-                    <option value="عادية" data-i18n="opt.pri0">عادية</option>
-                    <option value="مهمة" data-i18n="opt.pri1">مهمة</option>
-                    <option value="عاجلة" data-i18n="opt.pri2">عاجلة</option>
+                  <label for="deadline" data-i18n="f.deadline">تاريخ التسليم المطلوب</label>
+                  <input id="deadline" name="deadline" type="date">
+                </div>
+                <div class="field">
+                  <label for="priority" data-i18n="f.priority">أولوية المشروع</label>
+                  <select id="priority" name="priority">
+                    <option value="normal" data-i18n="opt.pri0">عادية</option>
+                    <option value="important" data-i18n="opt.pri1">مهمة</option>
+                    <option value="urgent" data-i18n="opt.pri2">عاجلة</option>
                   </select>
                 </div>
               </div>
             </div>
 
-            <!-- Step 5 -->
             <div class="step-pane" data-step="5">
               <h2 class="step-title" data-i18n="f.s5.title">راجع بيانات مشروعك</h2>
               <p class="step-copy" data-i18n="f.s5.desc">تأكد من التفاصيل قبل تجهيز رسالة WhatsApp.</p>
@@ -1833,57 +2103,57 @@ footer{
           <form id="maintenanceForm" novalidate>
             <div class="fields">
               <div class="field">
-                <label data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
-                <input name="maintenanceName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد">
-                <span class="error"></span>
+                <label for="maintenanceName" data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
+                <input id="maintenanceName" name="maintenanceName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد">
+                <span class="error" id="err-maintenanceName"></span>
               </div>
               <div class="field">
-                <label data-i18n="f.phone">رقم الهاتف <em>*</em></label>
-                <input name="maintenancePhone" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
-                <span class="error"></span>
+                <label for="maintenancePhone" data-i18n="f.phone">رقم الهاتف <em>*</em></label>
+                <input id="maintenancePhone" name="maintenancePhone" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
+                <span class="error" id="err-maintenancePhone"></span>
               </div>
               <div class="field">
-                <label data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
-                <input name="maintenanceWhatsapp" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
-                <span class="error"></span>
+                <label for="maintenanceWhatsapp" data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
+                <input id="maintenanceWhatsapp" name="maintenanceWhatsapp" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
+                <span class="error" id="err-maintenanceWhatsapp"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.maintSite">اسم الموقع أو التطبيق <em>*</em></label>
-                <input name="maintenanceSite" data-i18n-ph="ph.maintSite" placeholder="مثال: موقع الشركة / تطبيق العميل">
-                <span class="error"></span>
+                <label for="maintenanceSite" data-i18n="f.maintSite">اسم الموقع أو التطبيق <em>*</em></label>
+                <input id="maintenanceSite" name="maintenanceSite" data-i18n-ph="ph.maintSite" placeholder="مثال: موقع الشركة / تطبيق العميل">
+                <span class="error" id="err-maintenanceSite"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.maintType">نوع المشكلة <em>*</em></label>
-                <select name="maintenanceType">
+                <label for="maintenanceType" data-i18n="f.maintType">نوع المشكلة <em>*</em></label>
+                <select id="maintenanceType" name="maintenanceType">
                   <option value="" data-i18n="opt.chooseProblem">اختر نوع المشكلة</option>
-                  <option value="مشكلة فنية" data-i18n="opt.mt1">مشكلة فنية</option>
-                  <option value="بطء في الموقع" data-i18n="opt.mt2">بطء في الموقع</option>
-                  <option value="خطأ في التصميم" data-i18n="opt.mt3">خطأ في التصميم</option>
-                  <option value="مشكلة في الدفع" data-i18n="opt.mt4">مشكلة في الدفع</option>
-                  <option value="مشكلة في لوحة التحكم" data-i18n="opt.mt5">مشكلة في لوحة التحكم</option>
-                  <option value="أخرى" data-i18n="opt.other">أخرى</option>
+                  <option value="technical" data-i18n="opt.mt1">مشكلة فنية</option>
+                  <option value="slow" data-i18n="opt.mt2">بطء في الموقع</option>
+                  <option value="design" data-i18n="opt.mt3">خطأ في التصميم</option>
+                  <option value="payment" data-i18n="opt.mt4">مشكلة في الدفع</option>
+                  <option value="dashboard" data-i18n="opt.mt5">مشكلة في لوحة التحكم</option>
+                  <option value="other" data-i18n="opt.other">أخرى</option>
                 </select>
-                <span class="error"></span>
+                <span class="error" id="err-maintenanceType"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.maintDesc">وصف المشكلة <em>*</em></label>
-                <textarea name="maintenanceDescription" data-i18n-ph="ph.maintDesc" placeholder="اكتب المشكلة بالتفصيل..."></textarea>
-                <span class="error"></span>
+                <label for="maintenanceDescription" data-i18n="f.maintDesc">وصف المشكلة <em>*</em></label>
+                <textarea id="maintenanceDescription" name="maintenanceDescription" data-i18n-ph="ph.maintDesc" placeholder="اكتب المشكلة بالتفصيل..."></textarea>
+                <span class="error" id="err-maintenanceDescription"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
-                <select name="maintenanceSupportAgent">
+                <label for="maintenanceSupportAgent" data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
+                <select id="maintenanceSupportAgent" name="maintenanceSupportAgent">
                   <option value="" data-i18n="opt.chooseAgent">اختر الموظف</option>
                   <option value="201147722918" data-i18n="opt.agent1">الدعم 1</option>
                   <option value="201117823768" data-i18n="opt.agent2">الدعم 2</option>
                   <option value="201557417423" data-i18n="opt.agent3">الدعم 3</option>
                 </select>
-                <span class="error"></span>
+                <span class="error" id="err-maintenanceSupportAgent"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.usageCode">كود الاستخدام</label>
-                <input name="maintenanceUsageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
-                <span class="error"></span>
+                <label for="maintenanceUsageCode" data-i18n="f.usageCode">كود الاستخدام</label>
+                <input id="maintenanceUsageCode" name="maintenanceUsageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
+                <span class="error" id="err-maintenanceUsageCode"></span>
               </div>
             </div>
           </form>
@@ -1911,70 +2181,70 @@ footer{
           <form id="advertiseForm" novalidate>
             <div class="fields">
               <div class="field">
-                <label data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
-                <input name="advertiseName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد">
-                <span class="error"></span>
+                <label for="advertiseName" data-i18n="f.fullName">الاسم الكامل <em>*</em></label>
+                <input id="advertiseName" name="advertiseName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد">
+                <span class="error" id="err-advertiseName"></span>
               </div>
               <div class="field">
-                <label data-i18n="f.phone">رقم الهاتف <em>*</em></label>
-                <input name="advertisePhone" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
-                <span class="error"></span>
+                <label for="advertisePhone" data-i18n="f.phone">رقم الهاتف <em>*</em></label>
+                <input id="advertisePhone" name="advertisePhone" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
+                <span class="error" id="err-advertisePhone"></span>
               </div>
               <div class="field">
-                <label data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
-                <input name="advertiseWhatsapp" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
-                <span class="error"></span>
+                <label for="advertiseWhatsapp" data-i18n="f.whatsapp">رقم WhatsApp <em>*</em></label>
+                <input id="advertiseWhatsapp" name="advertiseWhatsapp" type="tel" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678">
+                <span class="error" id="err-advertiseWhatsapp"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.brand">اسم العلامة أو الشركة <em>*</em></label>
-                <input name="advertiseBrand" data-i18n-ph="ph.brand" placeholder="مثال: AMG DEV">
-                <span class="error"></span>
+                <label for="advertiseBrand" data-i18n="f.brand">اسم العلامة أو الشركة <em>*</em></label>
+                <input id="advertiseBrand" name="advertiseBrand" data-i18n-ph="ph.brand" placeholder="مثال: AMG DEV">
+                <span class="error" id="err-advertiseBrand"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.adsType">نوع الإعلان <em>*</em></label>
-                <select name="advertiseType">
+                <label for="advertiseType" data-i18n="f.adsType">نوع الإعلان <em>*</em></label>
+                <select id="advertiseType" name="advertiseType">
                   <option value="" data-i18n="opt.chooseAd">اختر نوع الإعلان</option>
-                  <option value="إعلان على السوشيال ميديا" data-i18n="opt.at1">إعلان على السوشيال ميديا</option>
-                  <option value="إعلان فيديو" data-i18n="opt.at2">إعلان فيديو</option>
-                  <option value="حملة إعلانية كاملة" data-i18n="opt.at3">حملة إعلانية كاملة</option>
-                  <option value="إعلان على Google / Web" data-i18n="opt.at4">إعلان على Google / Web</option>
-                  <option value="إعلان في متجر / تطبيق" data-i18n="opt.at5">إعلان في متجر / تطبيق</option>
-                  <option value="أخرى" data-i18n="opt.other">أخرى</option>
+                  <option value="social" data-i18n="opt.at1">إعلان على السوشيال ميديا</option>
+                  <option value="video" data-i18n="opt.at2">إعلان فيديو</option>
+                  <option value="campaign" data-i18n="opt.at3">حملة إعلانية كاملة</option>
+                  <option value="google" data-i18n="opt.at4">إعلان على Google / Web</option>
+                  <option value="store" data-i18n="opt.at5">إعلان في متجر / تطبيق</option>
+                  <option value="other" data-i18n="opt.other">أخرى</option>
                 </select>
-                <span class="error"></span>
+                <span class="error" id="err-advertiseType"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.adsDesc">نبذة عن الحملة <em>*</em></label>
-                <textarea name="advertiseDescription" data-i18n-ph="ph.adsDesc" placeholder="اكتب تفاصيل الحملة أو الهدف الإعلاني..."></textarea>
-                <span class="error"></span>
+                <label for="advertiseDescription" data-i18n="f.adsDesc">نبذة عن الحملة <em>*</em></label>
+                <textarea id="advertiseDescription" name="advertiseDescription" data-i18n-ph="ph.adsDesc" placeholder="اكتب تفاصيل الحملة أو الهدف الإعلاني..."></textarea>
+                <span class="error" id="err-advertiseDescription"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.adsDuration">مدة الإعلان <em>*</em></label>
-                <select name="advertiseDuration">
+                <label for="advertiseDuration" data-i18n="f.adsDuration">مدة الإعلان <em>*</em></label>
+                <select id="advertiseDuration" name="advertiseDuration">
                   <option value="" data-i18n="opt.chooseDuration">اختر مدة الإعلان</option>
-                  <option value="7 أيام" data-i18n="opt.ad1">7 أيام</option>
-                  <option value="15 يوم" data-i18n="opt.ad2">15 يوم</option>
-                  <option value="30 يوم" data-i18n="opt.ad3">30 يوم</option>
-                  <option value="45 يوم" data-i18n="opt.ad4">45 يوم</option>
-                  <option value="60 يوم" data-i18n="opt.ad5">60 يوم</option>
-                  <option value="90 يوم" data-i18n="opt.ad6">90 يوم</option>
+                  <option value="7_days" data-i18n="opt.ad1">7 أيام</option>
+                  <option value="15_days" data-i18n="opt.ad2">15 يوم</option>
+                  <option value="30_days" data-i18n="opt.ad3">30 يوم</option>
+                  <option value="45_days" data-i18n="opt.ad4">45 يوم</option>
+                  <option value="60_days" data-i18n="opt.ad5">60 يوم</option>
+                  <option value="90_days" data-i18n="opt.ad6">90 يوم</option>
                 </select>
-                <span class="error"></span>
+                <span class="error" id="err-advertiseDuration"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
-                <select name="advertiseSupportAgent">
+                <label for="advertiseSupportAgent" data-i18n="f.agent">موظف خدمة العملاء <em>*</em></label>
+                <select id="advertiseSupportAgent" name="advertiseSupportAgent">
                   <option value="" data-i18n="opt.chooseAgent">اختر الموظف</option>
                   <option value="201147722918" data-i18n="opt.agent1">الدعم 1</option>
                   <option value="201117823768" data-i18n="opt.agent2">الدعم 2</option>
                   <option value="201557417423" data-i18n="opt.agent3">الدعم 3</option>
                 </select>
-                <span class="error"></span>
+                <span class="error" id="err-advertiseSupportAgent"></span>
               </div>
               <div class="field full">
-                <label data-i18n="f.usageCode">كود الاستخدام</label>
-                <input name="advertiseUsageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
-                <span class="error"></span>
+                <label for="advertiseUsageCode" data-i18n="f.usageCode">كود الاستخدام</label>
+                <input id="advertiseUsageCode" name="advertiseUsageCode" data-i18n-ph="ph.usageCode" placeholder="أدخل كود الاستخدام إن وجد">
+                <span class="error" id="err-advertiseUsageCode"></span>
               </div>
             </div>
           </form>
@@ -2004,6 +2274,7 @@ footer{
             <button class="secondary" id="trackStatusButton" type="button" data-i18n="success.track">🔍 تتبع الطلب</button>
             <button class="secondary" id="returnButton" type="button" data-i18n="success.home">🏠 العودة للرئيسية</button>
           </div>
+          <div class="wa-fallback" id="waFallback" hidden></div>
         </div>
       </div>
     </section>
@@ -2052,6 +2323,10 @@ footer{
           <div class="wallet-section">
             <button class="use-points-button" id="usePointsBtn" type="button" data-i18n="wallet.usePoints">🎁 استخدام نقاطي</button>
             <p id="usePointsInfo"></p>
+            <div class="wallet-actions-row">
+              <button type="button" id="switchWalletBtn" data-i18n="wallet.switch">🔄 تبديل المحفظة</button>
+              <button type="button" id="logoutWalletBtn" data-i18n="wallet.logout">🚪 تسجيل الخروج</button>
+            </div>
           </div>
         </div>
 
@@ -2119,6 +2394,46 @@ footer{
       </div>
     </section>
 
+    <!-- ==================== DEMO ADMIN (hash-gated) ==================== -->
+    <section class="screen" id="adminScreen">
+      <div class="dash-wrap">
+        <div class="dash-hello">
+          <h1>🛠️ Admin Control Center</h1>
+          <p data-i18n="admin.sub">Client-side demo for managing requests and points. Real authentication and server-side protection are required for production.</p>
+        </div>
+        <div class="admin-overview">
+          <div class="admin-kpi"><div class="kpi-icon">📦</div><strong id="adminTotal">0</strong><span>Total Requests</span></div>
+          <div class="admin-kpi"><div class="kpi-icon">⏳</div><strong id="adminActive">0</strong><span>Active Projects</span></div>
+          <div class="admin-kpi"><div class="kpi-icon">✅</div><strong id="adminCompleted">0</strong><span>Completed</span></div>
+          <div class="admin-kpi"><div class="kpi-icon">🎁</div><strong id="adminPointsPending">0</strong><span>Pending Points</span></div>
+        </div>
+        <div class="dash-panel">
+          <h3>📦 Orders Management</h3>
+          <div class="admin-toolbar">
+            <input id="adminSearch" type="search" placeholder="Search by order number, name or project..." autocomplete="off">
+            <select id="adminStatusFilter">
+              <option value="all">All statuses</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div id="adminOrdersWrap"></div>
+        </div>
+        <div class="dash-panel">
+          <h3>⭐ Points Requests</h3>
+          <div id="adminPointsWrap"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal" id="adminDetailsModal" aria-hidden="true">
+      <div class="modal-card modal-wide">
+        <div class="modal-head"><h3 id="adminDetailsTitle">Request Details</h3><button type="button" class="modal-close" id="adminDetailsClose" aria-label="Close">×</button></div>
+        <div id="adminDetailsBody"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ==================== FOOTER ==================== -->
@@ -2137,6 +2452,11 @@ footer{
       <span class="footer-brand-name">AMG DEV</span>
     </div>
     <div data-i18n="footer.copy">© 2026 AMG. جميع الحقوق محفوظة.</div>
+    <nav class="footer-links" aria-label="Legal">
+      <button type="button" id="privacyBtn" data-i18n="footer.privacy">سياسة الخصوصية</button>
+      <button type="button" id="termsBtn" data-i18n="footer.terms">الشروط والأحكام</button>
+      <button type="button" id="dataDeleteBtn" data-i18n="footer.data">حذف بياناتي</button>
+    </nav>
   </footer>
 
 </div><!-- /shell -->
@@ -2151,18 +2471,20 @@ footer{
 </nav>
 
 <!-- ==================== MODALS ==================== -->
-<div class="modal" id="createWalletModal">
+<div class="modal" id="createWalletModal" role="dialog" aria-modal="true" aria-labelledby="createWalletTitle">
   <div class="modal-box">
-    <h2 data-i18n="modal.wallet.title">إنشاء محفظتك</h2>
+    <h2 id="createWalletTitle" data-i18n="modal.wallet.title">إنشاء محفظتك</h2>
     <p data-i18n="modal.wallet.desc">استخدم البيانات التالية لربط نقاطك وطلباتك بمحفظتك الخاصة.</p>
-    <form id="walletForm">
+    <form id="walletForm" novalidate>
       <div class="field" style="margin-bottom:16px">
-        <label data-i18n="f.walletName">الاسم <em>*</em></label>
-        <input type="text" name="walletName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد" required>
+        <label for="walletName" data-i18n="f.walletName">الاسم <em>*</em></label>
+        <input id="walletName" type="text" name="walletName" data-i18n-ph="ph.fullName" placeholder="مثال: أحمد محمد" autocomplete="name">
+        <span class="error" id="err-walletName"></span>
       </div>
       <div class="field" style="margin-bottom:16px">
-        <label data-i18n="f.walletPhone">رقم الهاتف <em>*</em></label>
-        <input type="tel" name="walletPhone" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678" required>
+        <label for="walletPhone" data-i18n="f.walletPhone">رقم الهاتف <em>*</em></label>
+        <input id="walletPhone" type="tel" name="walletPhone" data-i18n-ph="ph.phone" placeholder="مثال: 01012345678" autocomplete="tel">
+        <span class="error" id="err-walletPhone"></span>
       </div>
     </form>
     <div class="modal-actions">
@@ -2172,14 +2494,14 @@ footer{
   </div>
 </div>
 
-<div class="modal" id="usePointsModal">
+<div class="modal" id="usePointsModal" role="dialog" aria-modal="true" aria-labelledby="usePointsTitle">
   <div class="modal-box">
-    <h2 data-i18n="modal.points.title">🎁 استخدام النقاط</h2>
+    <h2 id="usePointsTitle" data-i18n="modal.points.title">🎁 استخدام النقاط</h2>
     <p id="usePointsModalText"></p>
-    <form id="usePointsForm">
+    <form id="usePointsForm" novalidate>
       <div class="field" style="margin-bottom:12px">
-        <label data-i18n="f.pointsAmount">كم نقطة تريد استخدامها؟</label>
-        <input type="number" name="pointsAmount" min="100" step="50" data-i18n-ph="ph.pointsAmount" placeholder="أدخل عدد النقاط">
+        <label for="pointsAmount" data-i18n="f.pointsAmount">كم نقطة تريد استخدامها؟</label>
+        <input id="pointsAmount" type="number" name="pointsAmount" min="100" step="50" data-i18n-ph="ph.pointsAmount" placeholder="أدخل عدد النقاط">
       </div>
       <p id="discountCalculation" style="text-align:center;color:var(--green);font-weight:800;margin:10px 0"></p>
     </form>
@@ -2190,13 +2512,23 @@ footer{
   </div>
 </div>
 
-<div class="modal" id="contactModal">
+<div class="modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
   <div class="modal-box">
-    <h2 data-i18n="modal.contact.title">💬 تواصل مع فريق AMG DEV</h2>
+    <h2 id="contactTitle" data-i18n="modal.contact.title">💬 تواصل مع فريق AMG DEV</h2>
     <p data-i18n="modal.contact.desc">اختر موظف خدمة العملاء المناسب لك وسيتم فتح محادثة WhatsApp مباشرة.</p>
     <div class="agent-list" id="agentList"></div>
     <div class="modal-actions">
       <button class="modal-close" id="contactCancelBtn" type="button" data-i18n="btn.close">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="legalModal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-box">
+    <h2 id="legalTitle"></h2>
+    <div id="legalBody" style="font-size:12.5px;line-height:1.95;color:var(--muted)"></div>
+    <div class="modal-actions">
+      <button class="modal-close" id="legalCloseBtn" type="button" data-i18n="btn.close">إغلاق</button>
     </div>
   </div>
 </div>
@@ -2228,10 +2560,25 @@ const WALLET_SESSION_KEY     = 'amg-current-wallet';
 const REWARD_TRANSACTIONS_KEY= 'amg-reward-transactions';
 const THEME_KEY              = 'amg-dev-theme';
 const LANG_KEY               = 'amg-dev-lang';
+const SCHEMA_VERSION_KEY     = 'amg-dev-schema-version';
+const SCHEMA_VERSION         = 3;
 const POINTS_TIER            = 500;
+const MAX_FILE_BYTES         = 5 * 1024 * 1024;
 
 /* ----------------------------------------------------------
-   TRANSLATIONS  (Arabic + English)
+   ORDER STAGES — includes "in progress"
+   ---------------------------------------------------------- */
+const ORDER_STAGES = [
+  { key:'received'  },
+  { key:'review'    },
+  { key:'progress'  },
+  { key:'final'     },
+  { key:'delivered' }
+];
+const FINAL_STAGE_INDEX = ORDER_STAGES.length - 1;
+
+/* ----------------------------------------------------------
+   TRANSLATIONS
    ---------------------------------------------------------- */
 const TRANSLATIONS = {
   ar: {
@@ -2298,10 +2645,12 @@ const TRANSLATIONS = {
     'cta.desc':'أرسل تفاصيل مشروعك الآن ودع AMG DEV يبدأ معك من أول خطوة.',
     'cta.btn':'ابدأ مشروعك الآن ←',
     'footer.copy':'© 2026 AMG. جميع الحقوق محفوظة.',
+    'footer.privacy':'سياسة الخصوصية','footer.terms':'الشروط والأحكام','footer.data':'حذف بياناتي',
 
     'btn.back':'رجوع','btn.prev':'رجوع','btn.next':'التالي ←','btn.submit':'🚀 تأكيد وإرسال الطلب',
     'btn.cancel':'إلغاء','btn.close':'إغلاق','btn.confirm':'تأكيد','btn.createWallet':'إنشاء المحفظة',
     'btn.sendMaint':'إرسال طلب الصيانة','btn.sendAd':'إرسال طلب الإعلان',
+    'btn.cancelRequest':'إلغاء الطلب',
 
     'step.client':'بيانات العميل','step.project':'المشروع','step.details':'التفاصيل',
     'step.budget':'الميزانية','step.review':'المراجعة',
@@ -2326,14 +2675,17 @@ const TRANSLATIONS = {
     'f.projectName':'اسم المشروع <em>*</em>','f.projectType':'نوع المشروع <em>*</em>',
     'f.description':'وصف المشروع <em>*</em>','f.services':'الخدمات المطلوبة',
     'f.features':'المميزات المطلوبة','f.reference':'رابط مرجعي',
-    'f.duration':'مدة التنفيذ المطلوبة','f.deadline':'تاريخ التسليم المطلوب','f.priority':'أولوية المشروع',
+    'f.budget':'الميزانية التقديرية','f.duration':'مدة التنفيذ المطلوبة',
+    'f.deadline':'تاريخ التسليم المطلوب','f.priority':'أولوية المشروع',
+    'f.attachments':'ملفات مرجعية',
+    'f.attachmentsHint':'سيتم ذكر أسماء الملفات في الطلب. أرسل الملفات نفسها عبر محادثة WhatsApp بعد الإرسال.',
     'f.maintSite':'اسم الموقع أو التطبيق <em>*</em>','f.maintType':'نوع المشكلة <em>*</em>',
     'f.maintDesc':'وصف المشكلة <em>*</em>','f.brand':'اسم العلامة أو الشركة <em>*</em>',
     'f.adsType':'نوع الإعلان <em>*</em>','f.adsDesc':'نبذة عن الحملة <em>*</em>',
     'f.adsDuration':'مدة الإعلان <em>*</em>','f.walletName':'الاسم <em>*</em>',
     'f.walletPhone':'رقم الهاتف <em>*</em>','f.pointsAmount':'كم نقطة تريد استخدامها؟',
 
-    'ph.fullName':'مثال: أحمد محمد','ph.phone':'مثال: 01012345678',
+    'ph.fullName':'مثال: أحمد محمد','ph.phone':'1012345678',
     'ph.whatsapp':'الرقم الذي سنراسلك عليه','ph.usageCode':'أدخل كود الاستخدام إن وجد',
     'ph.email':'name@example.com','ph.country':'مثال: مصر','ph.city':'مثال: القاهرة',
     'ph.projectName':'مثال: منصة تعليمية','ph.description':'اشرح لنا فكرة المشروع بالتفصيل...',
@@ -2347,8 +2699,12 @@ const TRANSLATIONS = {
     'opt.chooseType':'اختر نوع المشروع','opt.website':'موقع إلكتروني','opt.store':'متجر إلكتروني',
     'opt.mobile':'تطبيق موبايل','opt.platform':'منصة ويب','opt.erp':'نظام إدارة',
     'opt.desktop':'برنامج Desktop','opt.uiux':'تصميم UI/UX','opt.custom':'مشروع برمجي مخصص',
-    'opt.other':'أخرى','opt.dur0':'غير محددة','opt.dur1':'1 - 2 أسبوع','opt.dur2':'2 - 4 أسابيع',
-    'opt.dur3':'1 - 2 شهر','opt.dur4':'أكثر من شهرين','opt.pri0':'عادية','opt.pri1':'مهمة','opt.pri2':'عاجلة',
+    'opt.other':'أخرى',
+    'opt.budget0':'غير محددة','opt.budget1':'أقل من 5,000','opt.budget2':'5,000 – 15,000',
+    'opt.budget3':'15,000 – 50,000','opt.budget4':'50,000 – 100,000','opt.budget5':'أكثر من 100,000',
+    'opt.dur0':'غير محددة','opt.dur1':'1 - 2 أسبوع','opt.dur2':'2 - 4 أسابيع',
+    'opt.dur3':'1 - 2 شهر','opt.dur4':'أكثر من شهرين',
+    'opt.pri0':'عادية','opt.pri1':'مهمة','opt.pri2':'عاجلة',
     'opt.chooseProblem':'اختر نوع المشكلة','opt.mt1':'مشكلة فنية','opt.mt2':'بطء في الموقع',
     'opt.mt3':'خطأ في التصميم','opt.mt4':'مشكلة في الدفع','opt.mt5':'مشكلة في لوحة التحكم',
     'opt.chooseAd':'اختر نوع الإعلان','opt.at1':'إعلان على السوشيال ميديا','opt.at2':'إعلان فيديو',
@@ -2356,15 +2712,25 @@ const TRANSLATIONS = {
     'opt.chooseDuration':'اختر مدة الإعلان','opt.ad1':'7 أيام','opt.ad2':'15 يوم','opt.ad3':'30 يوم',
     'opt.ad4':'45 يوم','opt.ad5':'60 يوم','opt.ad6':'90 يوم',
 
+    'svc.opt.uiux':'تصميم UI/UX','svc.opt.frontend':'الواجهة الأمامية','svc.opt.backend':'الواجهة الخلفية',
+    'svc.opt.database':'قاعدة البيانات','svc.opt.api':'واجهات API','svc.opt.mobile':'تطبيق موبايل',
+    'svc.opt.dashboard':'لوحة تحكم','svc.opt.payment':'بوابة دفع','svc.opt.hosting':'استضافة',
+    'svc.opt.domain':'نطاق (دومين)','svc.opt.security':'أمان','svc.opt.ai':'دمج الذكاء الاصطناعي',
+    'svc.opt.other':'أخرى',
+
     'err.required':'❌ هذا الحقل مطلوب.','err.phone':'❌ رقم الهاتف غير صحيح.',
-    'err.whatsapp':'❌ رقم WhatsApp غير صحيح.','err.fillAll':'❌ يرجى ملء جميع الحقول المطلوبة',
+    'err.whatsapp':'❌ رقم WhatsApp غير صحيح.','err.email':'❌ البريد الإلكتروني غير صحيح.',
+    'err.fillAll':'❌ يرجى ملء جميع الحقول المطلوبة',
     'err.namePhone':'❌ الاسم ورقم الهاتف مطلوبان','err.noBalance':'❌ لا يوجد رصيد كافٍ',
     'err.badAmount':'❌ المبلغ غير صحيح (الحد الأدنى 100 نقطة)','err.trackEmpty':'❌ أدخل رقم الطلب أولاً',
+    'err.fileTooBig':'❌ حجم الملف كبير جدًا (الحد الأقصى 5 ميجابايت)',
 
     'success.eyebrow':'REQUEST READY','success.title':'🎉 تم تجهيز طلبك بنجاح!',
     'success.desc':'تم حفظ تفاصيل طلبك بنجاح. اضغط على الزر التالي لإرسال الطلب إلى فريق AMG DEV عبر WhatsApp، ويمكنك دائمًا متابعة حالته برقم الطلب.',
     'success.orderLabel':'رقم الطلب','success.whatsapp':'📲 إرسال عبر WhatsApp',
     'success.copy':'📋 نسخ رقم الطلب','success.track':'🔍 تتبع الطلب','success.home':'🏠 العودة للرئيسية',
+    'success.waBlocked':'⚠️ لم يتمكن المتصفح من فتح WhatsApp تلقائيًا. اضغط على الرابط التالي:',
+    'success.waLink':'فتح محادثة WhatsApp',
 
     'toast.copied':'📋 تم نسخ رقم الطلب','toast.orderSaved':'✅ تم تسجيل الطلب بنجاح!',
     'toast.pointsEarned':'✅ تم تسجيل الطلب بنجاح! +{n} نقطة ⭐',
@@ -2372,6 +2738,9 @@ const TRANSLATIONS = {
     'toast.adSent':'✅ تم إرسال طلب الإعلان!','toast.adSentPts':'✅ تم إرسال طلب الإعلان! +15 نقطة ⭐',
     'toast.walletCreated':'🎉 تم إنشاء محفظتك بنجاح!',
     'toast.pointsRequested':'✅ تم تقديم طلب استخدام {n} نقطة',
+    'toast.requestCancelled':'✅ تم إلغاء الطلب',
+    'toast.switchedWallet':'🔄 تم تبديل المحفظة',
+    'toast.loggedOut':'🚪 تم تسجيل الخروج من المحفظة',
 
     'wallet.title':'⭐ محفظتي','wallet.greeting':'مرحبًا','wallet.balanceLabel':'رصيد النقاط',
     'wallet.idLabel':'المحفظة:','wallet.earned':'مكتسب','wallet.used':'مستخدم','wallet.last':'آخر عملية',
@@ -2384,8 +2753,15 @@ const TRANSLATIONS = {
     'wallet.history':'📊 سجل العمليات','wallet.requests':'🎁 طلبات استخدام النقاط',
     'wallet.empty':'لا توجد عمليات بعد','wallet.emptyReq':'لا توجد طلبات حتى الآن',
     'wallet.credit':'إضافة','wallet.debit':'خصم','wallet.usedReason':'استخدام النقاط',
-    'wallet.pending':'قيد المراجعة','wallet.pts':'نقطة',
+    'wallet.pending':'قيد المراجعة','wallet.approved':'مقبول','wallet.rejected':'مرفوض','wallet.pts':'نقطة',
     'wallet.discountOf':'خصم {a} نقطة = {b} جنيه',
+    'wallet.switch':'🔄 تبديل المحفظة','wallet.logout':'🚪 تسجيل الخروج',
+    'wallet.noOther':'لا توجد محافظ أخرى محفوظة على هذا الجهاز.',
+    'wallet.switchTitle':'اختر محفظة',
+    'wallet.amounts':'مكتسب {e} · مستخدم {u}',
+
+    'points.reason.project':'مكافأة طلب مشروع','points.reason.maintenance':'مكافأة طلب صيانة',
+    'points.reason.advertise':'مكافأة طلب إعلان','points.reason.request':'مكافأة طلب',
 
     'date.today':'اليوم','date.yesterday':'أمس','date.daysAgo':'{n} يوم',
 
@@ -2394,10 +2770,14 @@ const TRANSLATIONS = {
     'track.notFoundDesc':'تأكد من كتابة رقم الطلب بشكل صحيح، مثال:',
     'track.timeline':'خط سير الطلب','track.created':'تاريخ الإنشاء:',
     'track.current':'الحالة الحالية:','track.request':'طلب',
+    'track.deliveredBadge':'تم التسليم',
+    'track.cancelledBadge':'ملغي',
+    'track.cancelled':'تم إلغاء الطلب',
+    'track.cancelConfirm':'هل أنت متأكد من إلغاء هذا الطلب؟',
 
     'stage.received':'تم استلام الطلب','stage.received.desc':'وصلنا طلبك وسيتم توجيهه للفريق المختص.',
     'stage.review':'مراجعة المتطلبات','stage.review.desc':'نراجع التفاصيل ونحدد نطاق العمل المبدئي.',
-    'stage.progress':'قيد التنفيذ','stage.progress.desc':'الفريق يعمل على المشروع حاليًا.',
+    'stage.progress':'قيد التنفيذ','stage.progress.desc':'الفريق يعمل على تنفيذ المشروع حاليًا.',
     'stage.final':'المراجعة النهائية','stage.final.desc':'تجربة أخيرة قبل التسليم الرسمي.',
     'stage.delivered':'تم التسليم','stage.delivered.desc':'تم تسليم المشروع بنجاح.',
 
@@ -2423,12 +2803,29 @@ const TRANSLATIONS = {
     'modal.contact.title':'💬 تواصل مع فريق AMG DEV',
     'modal.contact.desc':'اختر موظف خدمة العملاء المناسب لك وسيتم فتح محادثة WhatsApp مباشرة.',
     'modal.contact.msg':'💬 مرحبًا فريق AMG DEV، أرغب في الاستفسار عن خدماتكم.',
+    'modal.switchWallet.title':'اختر محفظة',
+    'modal.switchWallet.desc':'اختر إحدى المحافظ المحفوظة على هذا الجهاز.',
+
+    'legal.privacy.title':'سياسة الخصوصية',
+    'legal.privacy.body':'يتم تخزين كل بياناتك (الطلبات، المحفظة، النقاط) محليًا في متصفحك باستخدام localStorage فقط. لا يتم إرسال أي بيانات إلى أي خادم من هذا التطبيق. عند إرسال الطلب عبر WhatsApp فإنك توافق على سياسة خصوصية WhatsApp. يمكنك حذف كل بياناتك في أي وقت من زر «حذف بياناتي» في التذييل.',
+    'legal.terms.title':'الشروط والأحكام',
+    'legal.terms.body':'هذا التطبيق يعمل كواجهة أمامية لعرض وتقديم طلبات المشاريع والخدمات. يتم تسجيل الطلب محليًا في متصفحك، ويتم إرسال تفاصيله إلى فريق AMG DEV عبر WhatsApp. الأسعار والمدد المذكورة تقديرية وقابلة للتغيير حسب المتطلبات الفعلية. لا يتحمل التطبيق مسؤولية أي بيانات مفقودة نتيجة مسح ذاكرة المتصفح.',
+    'legal.data.title':'حذف بياناتي',
+    'legal.data.body':'سيؤدي هذا الإجراء إلى حذف جميع الطلبات والمحافظ والنقاط المحفوظة على هذا الجهاز بشكل نهائي. هل أنت متأكد؟',
+    'legal.data.confirm':'نعم، احذف الكل',
+    'legal.data.cancelled':'تم الإلغاء',
+
+    'admin.sub':'This is a client-side demo. In production this screen is protected by a real backend.',
+    'admin.orders':'Orders','admin.points':'Points Requests','admin.noOrders':'No orders yet',
+    'admin.noPoints':'No points requests','admin.stage':'Stage','admin.save':'Save',
+    'admin.cancel':'Cancel','admin.approve':'Approve','admin.reject':'Reject','admin.cancelled':'Cancelled',
 
     'field.fullName':'الاسم','field.phone':'الهاتف','field.whatsapp':'واتساب',
     'field.usageCode':'كود الاستخدام','field.email':'البريد الإلكتروني',
     'field.country':'الدولة','field.city':'المدينة','field.projectName':'اسم المشروع',
     'field.projectType':'النوع','field.description':'الوصف','field.features':'المميزات',
-    'field.reference':'رابط مرجعي','field.duration':'المدة','field.deadline':'تاريخ التسليم',
+    'field.reference':'رابط مرجعي','field.attachments':'الملفات','field.budget':'الميزانية',
+    'field.duration':'المدة','field.deadline':'تاريخ التسليم',
     'field.priority':'الأولوية','field.services':'الخدمات','field.walletId':'رقم المحفظة',
 
     'wa.project':'🚀 *طلب مشروع جديد | AMG DEV*',
@@ -2439,6 +2836,8 @@ const TRANSLATIONS = {
     'wa.email':'البريد','wa.location':'الدولة/المدينة',
     'wa.projectDetails':'💻 *تفاصيل المشروع*','wa.projectName':'اسم المشروع',
     'wa.projectType':'النوع','wa.duration':'المدة','wa.priority':'الأولوية',
+    'wa.budget':'الميزانية','wa.deadline':'تاريخ التسليم','wa.reference':'الرابط المرجعي',
+    'wa.attachments':'📎 *الملفات المرفقة*',
     'wa.desc':'📝 *الوصف*','wa.services':'🛠️ *الخدمات المطلوبة*','wa.features':'✨ *المميزات*',
     'wa.orderId':'🆔 *رقم الطلب*','wa.date':'⏰ *التاريخ*',
     'wa.site':'اسم الموقع/التطبيق','wa.problemType':'نوع المشكلة',
@@ -2507,10 +2906,12 @@ const TRANSLATIONS = {
     'cta.desc':'Send us your project details now and let AMG DEV take the first step with you.',
     'cta.btn':'Start Your Project Now →',
     'footer.copy':'© 2026 AMG. All rights reserved.',
+    'footer.privacy':'Privacy Policy','footer.terms':'Terms & Conditions','footer.data':'Delete my data',
 
     'btn.back':'Back','btn.prev':'Back','btn.next':'Next →','btn.submit':'🚀 Confirm & Send Request',
     'btn.cancel':'Cancel','btn.close':'Close','btn.confirm':'Confirm','btn.createWallet':'Create Wallet',
     'btn.sendMaint':'Send Maintenance Request','btn.sendAd':'Send Advertising Request',
+    'btn.cancelRequest':'Cancel request',
 
     'step.client':'Client Info','step.project':'Project','step.details':'Details',
     'step.budget':'Budget','step.review':'Review','progress.step':'Step','progress.of':'of',
@@ -2534,14 +2935,17 @@ const TRANSLATIONS = {
     'f.projectName':'Project Name <em>*</em>','f.projectType':'Project Type <em>*</em>',
     'f.description':'Project Description <em>*</em>','f.services':'Required Services',
     'f.features':'Required Features','f.reference':'Reference Link',
-    'f.duration':'Estimated Duration','f.deadline':'Requested Delivery Date','f.priority':'Project Priority',
+    'f.budget':'Estimated Budget','f.duration':'Estimated Duration',
+    'f.deadline':'Requested Delivery Date','f.priority':'Project Priority',
+    'f.attachments':'Reference Files',
+    'f.attachmentsHint':'File names will be listed in the request. Send the actual files in the WhatsApp chat after submission.',
     'f.maintSite':'Website or App Name <em>*</em>','f.maintType':'Problem Type <em>*</em>',
     'f.maintDesc':'Problem Description <em>*</em>','f.brand':'Brand or Company Name <em>*</em>',
     'f.adsType':'Advertising Type <em>*</em>','f.adsDesc':'About the Campaign <em>*</em>',
     'f.adsDuration':'Advertising Duration <em>*</em>','f.walletName':'Name <em>*</em>',
     'f.walletPhone':'Phone Number <em>*</em>','f.pointsAmount':'How many points do you want to use?',
 
-    'ph.fullName':'e.g. Ahmed Mohamed','ph.phone':'e.g. 01012345678',
+    'ph.fullName':'e.g. Ahmed Mohamed','ph.phone':'1012345678',
     'ph.whatsapp':'The number we should contact you on','ph.usageCode':'Enter your usage code if you have one',
     'ph.email':'name@example.com','ph.country':'e.g. Egypt','ph.city':'e.g. Cairo',
     'ph.projectName':'e.g. Learning Platform','ph.description':'Describe your project idea in detail...',
@@ -2555,8 +2959,12 @@ const TRANSLATIONS = {
     'opt.chooseType':'Choose project type','opt.website':'Website','opt.store':'E-Commerce Store',
     'opt.mobile':'Mobile App','opt.platform':'Web Platform','opt.erp':'Management System',
     'opt.desktop':'Desktop Software','opt.uiux':'UI/UX Design','opt.custom':'Custom Software Project',
-    'opt.other':'Other','opt.dur0':'Not specified','opt.dur1':'1 - 2 weeks','opt.dur2':'2 - 4 weeks',
-    'opt.dur3':'1 - 2 months','opt.dur4':'More than 2 months','opt.pri0':'Normal','opt.pri1':'Important','opt.pri2':'Urgent',
+    'opt.other':'Other',
+    'opt.budget0':'Not specified','opt.budget1':'Under 5,000','opt.budget2':'5,000 – 15,000',
+    'opt.budget3':'15,000 – 50,000','opt.budget4':'50,000 – 100,000','opt.budget5':'Over 100,000',
+    'opt.dur0':'Not specified','opt.dur1':'1 - 2 weeks','opt.dur2':'2 - 4 weeks',
+    'opt.dur3':'1 - 2 months','opt.dur4':'More than 2 months',
+    'opt.pri0':'Normal','opt.pri1':'Important','opt.pri2':'Urgent',
     'opt.chooseProblem':'Choose the problem type','opt.mt1':'Technical issue','opt.mt2':'Website slowness',
     'opt.mt3':'Design issue','opt.mt4':'Payment issue','opt.mt5':'Dashboard issue',
     'opt.chooseAd':'Choose advertising type','opt.at1':'Social media ad','opt.at2':'Video ad',
@@ -2564,15 +2972,25 @@ const TRANSLATIONS = {
     'opt.chooseDuration':'Choose advertising duration','opt.ad1':'7 days','opt.ad2':'15 days','opt.ad3':'30 days',
     'opt.ad4':'45 days','opt.ad5':'60 days','opt.ad6':'90 days',
 
+    'svc.opt.uiux':'UI/UX Design','svc.opt.frontend':'Frontend','svc.opt.backend':'Backend',
+    'svc.opt.database':'Database','svc.opt.api':'API','svc.opt.mobile':'Mobile App',
+    'svc.opt.dashboard':'Admin Dashboard','svc.opt.payment':'Payment Gateway','svc.opt.hosting':'Hosting',
+    'svc.opt.domain':'Domain','svc.opt.security':'Security','svc.opt.ai':'AI Integration',
+    'svc.opt.other':'Other',
+
     'err.required':'❌ This field is required.','err.phone':'❌ Invalid phone number.',
-    'err.whatsapp':'❌ Invalid WhatsApp number.','err.fillAll':'❌ Please fill in all required fields',
+    'err.whatsapp':'❌ Invalid WhatsApp number.','err.email':'❌ Invalid email address.',
+    'err.fillAll':'❌ Please fill in all required fields',
     'err.namePhone':'❌ Name and phone number are required','err.noBalance':'❌ Insufficient balance',
     'err.badAmount':'❌ Invalid amount (minimum 100 points)','err.trackEmpty':'❌ Please enter an order number first',
+    'err.fileTooBig':'❌ File too large (max 5 MB)',
 
     'success.eyebrow':'REQUEST READY','success.title':'🎉 Your request has been prepared!',
     'success.desc':'Your request details have been saved successfully. Press the button below to send it to the AMG DEV team via WhatsApp — you can always track it later using your order number.',
     'success.orderLabel':'Order Number','success.whatsapp':'📲 Send via WhatsApp',
     'success.copy':'📋 Copy Order Number','success.track':'🔍 Track Order','success.home':'🏠 Back to Home',
+    'success.waBlocked':'⚠️ The browser could not open WhatsApp automatically. Click the link below:',
+    'success.waLink':'Open WhatsApp chat',
 
     'toast.copied':'📋 Order number copied','toast.orderSaved':'✅ Request saved successfully!',
     'toast.pointsEarned':'✅ Request saved successfully! +{n} points ⭐',
@@ -2580,6 +2998,9 @@ const TRANSLATIONS = {
     'toast.adSent':'✅ Advertising request sent!','toast.adSentPts':'✅ Advertising request sent! +15 points ⭐',
     'toast.walletCreated':'🎉 Your wallet has been created!',
     'toast.pointsRequested':'✅ Request submitted to use {n} points',
+    'toast.requestCancelled':'✅ Request cancelled',
+    'toast.switchedWallet':'🔄 Wallet switched',
+    'toast.loggedOut':'🚪 Logged out of wallet',
 
     'wallet.title':'⭐ My Wallet','wallet.greeting':'Hello','wallet.balanceLabel':'Points Balance',
     'wallet.idLabel':'Wallet:','wallet.earned':'Earned','wallet.used':'Used','wallet.last':'Last Activity',
@@ -2592,8 +3013,15 @@ const TRANSLATIONS = {
     'wallet.history':'📊 Transaction History','wallet.requests':'🎁 Points Redemption Requests',
     'wallet.empty':'No transactions yet','wallet.emptyReq':'No requests yet',
     'wallet.credit':'Credit','wallet.debit':'Debit','wallet.usedReason':'Points redemption',
-    'wallet.pending':'Under review','wallet.pts':'pts',
+    'wallet.pending':'Under review','wallet.approved':'Approved','wallet.rejected':'Rejected','wallet.pts':'pts',
     'wallet.discountOf':'{a} points = {b} EGP discount',
+    'wallet.switch':'🔄 Switch wallet','wallet.logout':'🚪 Log out',
+    'wallet.noOther':'No other wallets saved on this device.',
+    'wallet.switchTitle':'Choose a wallet',
+    'wallet.amounts':'Earned {e} · Used {u}',
+
+    'points.reason.project':'Project request reward','points.reason.maintenance':'Maintenance request reward',
+    'points.reason.advertise':'Advertising request reward','points.reason.request':'Request reward',
 
     'date.today':'Today','date.yesterday':'Yesterday','date.daysAgo':'{n} days ago',
 
@@ -2602,6 +3030,10 @@ const TRANSLATIONS = {
     'track.notFoundDesc':'Please make sure the order number is correct, e.g.',
     'track.timeline':'Order Timeline','track.created':'Created:',
     'track.current':'Current status:','track.request':'Request',
+    'track.deliveredBadge':'Order Delivered',
+    'track.cancelledBadge':'Cancelled',
+    'track.cancelled':'Order cancelled',
+    'track.cancelConfirm':'Are you sure you want to cancel this request?',
 
     'stage.received':'Order Received','stage.received.desc':'We received your request and will route it to the right team.',
     'stage.review':'Requirements Reviewed','stage.review.desc':'We review the details and define the initial scope of work.',
@@ -2631,13 +3063,29 @@ const TRANSLATIONS = {
     'modal.contact.title':'💬 Contact the AMG DEV team',
     'modal.contact.desc':'Choose the support agent you prefer and a WhatsApp chat will open directly.',
     'modal.contact.msg':'💬 Hello AMG DEV team, I would like to ask about your services.',
+    'modal.switchWallet.title':'Choose a wallet',
+    'modal.switchWallet.desc':'Pick one of the wallets saved on this device.',
+
+    'legal.privacy.title':'Privacy Policy',
+    'legal.privacy.body':'All your data (requests, wallet, points) is stored only in your browser using localStorage. This application does not send any data to any server. When you send a request via WhatsApp, you agree to WhatsApp\u2019s privacy policy. You can delete all your data at any time using the “Delete my data” button in the footer.',
+    'legal.terms.title':'Terms & Conditions',
+    'legal.terms.body':'This app is a front-end interface for submitting and viewing project and service requests. Requests are stored locally in your browser and their details are sent to the AMG DEV team via WhatsApp. All prices and durations are estimates and may change based on the actual requirements. The app is not responsible for any data lost due to clearing browser storage.',
+    'legal.data.title':'Delete my data',
+    'legal.data.body':'This will permanently delete all requests, wallets and points stored on this device. Are you sure?',
+    'legal.data.confirm':'Yes, delete everything',
+    'legal.data.cancelled':'Cancelled',
+
+    'admin.sub':'This is a client-side demo. In production this screen is protected by a real backend.',
+    'admin.orders':'Orders','admin.points':'Points Requests','admin.noOrders':'No orders yet',
+    'admin.noPoints':'No points requests','admin.stage':'Stage','admin.save':'Save',
+    'admin.cancel':'Cancel','admin.approve':'Approve','admin.reject':'Reject','admin.cancelled':'Cancelled',
 
     'field.fullName':'Name','field.phone':'Phone','field.whatsapp':'WhatsApp',
     'field.usageCode':'Usage Code','field.email':'Email','field.country':'Country','field.city':'City',
     'field.projectName':'Project Name','field.projectType':'Type','field.description':'Description',
-    'field.features':'Features','field.reference':'Reference Link','field.duration':'Duration',
-    'field.deadline':'Delivery Date','field.priority':'Priority','field.services':'Services',
-    'field.walletId':'Wallet ID',
+    'field.features':'Features','field.reference':'Reference Link','field.attachments':'Attachments',
+    'field.budget':'Budget','field.duration':'Duration','field.deadline':'Delivery Date',
+    'field.priority':'Priority','field.services':'Services','field.walletId':'Wallet ID',
 
     'wa.project':'🚀 *New Project Request | AMG DEV*',
     'wa.maintenance':'🛠️ *New Maintenance Request | AMG DEV*',
@@ -2647,6 +3095,8 @@ const TRANSLATIONS = {
     'wa.email':'Email','wa.location':'Country/City',
     'wa.projectDetails':'💻 *Project Details*','wa.projectName':'Project Name',
     'wa.projectType':'Type','wa.duration':'Duration','wa.priority':'Priority',
+    'wa.budget':'Budget','wa.deadline':'Delivery Date','wa.reference':'Reference Link',
+    'wa.attachments':'📎 *Attachments*',
     'wa.desc':'📝 *Description*','wa.services':'🛠️ *Required Services*','wa.features':'✨ *Features*',
     'wa.orderId':'🆔 *Order Number*','wa.date':'⏰ *Date*',
     'wa.site':'Website/App Name','wa.problemType':'Problem Type',
@@ -2664,6 +3114,7 @@ let orderId = '';
 let currentWallet = null;
 let currentScreen = 'homeScreen';
 const screenHistory = [];
+let pendingAttachments = [];
 
 const form  = document.getElementById('requestForm');
 const toast = document.getElementById('toast');
@@ -2710,6 +3161,80 @@ function showToast(message){
 }
 
 /* ----------------------------------------------------------
+   FIELD LABELS (data → translation keys)
+   ---------------------------------------------------------- */
+const FIELD_LABEL_KEYS = {
+  fullName:'field.fullName', phone:'field.phone', whatsapp:'field.whatsapp',
+  usageCode:'field.usageCode', email:'field.email', country:'field.country',
+  city:'field.city', projectName:'field.projectName', projectType:'field.projectType',
+  description:'field.description', features:'field.features', reference:'field.reference',
+  attachments:'field.attachments', budget:'field.budget', duration:'field.duration',
+  deadline:'field.deadline', priority:'field.priority', walletId:'field.walletId'
+};
+
+/* Value → translation key maps for select values */
+const VALUE_LABEL_KEYS = {
+  projectType: {
+    website:'opt.website', store:'opt.store', mobile:'opt.mobile', platform:'opt.platform',
+    erp:'opt.erp', desktop:'opt.desktop', uiux:'opt.uiux', custom:'opt.custom', other:'opt.other'
+  },
+  budget: {
+    not_specified:'opt.budget0', under_5k:'opt.budget1', '5k_15k':'opt.budget2',
+    '15k_50k':'opt.budget3', '50k_100k':'opt.budget4', over_100k:'opt.budget5'
+  },
+  duration: {
+    not_specified:'opt.dur0', '1_2_weeks':'opt.dur1', '2_4_weeks':'opt.dur2',
+    '1_2_months':'opt.dur3', over_2_months:'opt.dur4'
+  },
+  priority: { normal:'opt.pri0', important:'opt.pri1', urgent:'opt.pri2' }
+};
+
+/* Service value → translation key */
+const SERVICE_LABELS = {
+  'UI/UX Design':'svc.opt.uiux',
+  'Frontend':'svc.opt.frontend',
+  'Backend':'svc.opt.backend',
+  'Database':'svc.opt.database',
+  'API':'svc.opt.api',
+  'Mobile App':'svc.opt.mobile',
+  'Admin Dashboard':'svc.opt.dashboard',
+  'Payment Gateway':'svc.opt.payment',
+  'Hosting':'svc.opt.hosting',
+  'Domain':'svc.opt.domain',
+  'Security':'svc.opt.security',
+  'AI Integration':'svc.opt.ai',
+  'Other':'svc.opt.other'
+};
+
+function labelForValue(fieldName, value){
+  if (value === undefined || value === null || value === '') return t('wa.none');
+  const map = VALUE_LABEL_KEYS[fieldName];
+  if (map && map[value]) return t(map[value]);
+  return String(value);
+}
+function labelForService(value){
+  const key = SERVICE_LABELS[value];
+  return key ? t(key) : value;
+}
+function translateReason(reason){
+  if (!reason) return '';
+  const reasonMap = {
+    'project':'points.reason.project',
+    'maintenance':'points.reason.maintenance',
+    'advertise':'points.reason.advertise',
+    'request':'points.reason.request'
+  };
+  const key = reasonMap[String(reason).toLowerCase()];
+  if (key) return t(key);
+  if (reason === 'استخدام النقاط' || reason === 'Points redemption') return t('wallet.usedReason');
+  return reason;
+}
+function getAgentLabel(number){
+  const agent = CUSTOMER_SUPPORT_NUMBERS.find(a => a.number === String(number));
+  return agent ? t(agent.key) : String(number);
+}
+
+/* ----------------------------------------------------------
    LANGUAGE
    ---------------------------------------------------------- */
 function applyLanguage(lang){
@@ -2741,6 +3266,7 @@ function applyLanguage(lang){
   if (currentStep === 5) buildReview();
   if (currentScreen === 'walletScreen') renderWalletScreen();
   if (currentScreen === 'dashboardScreen') renderDashboardScreen();
+  if (currentScreen === 'adminScreen') renderAdminScreen();
   if (currentScreen === 'trackScreen'){
     const code = document.getElementById('trackInput').value.trim();
     if (code) renderTrackResult(code);
@@ -2752,12 +3278,36 @@ document.getElementById('langToggle').addEventListener('click', () => {
 });
 
 /* ----------------------------------------------------------
+   SCHEMA MIGRATION
+   ---------------------------------------------------------- */
+function migrateStorage(){
+  const v = Number(localStorage.getItem(SCHEMA_VERSION_KEY) || 0);
+  if (v >= SCHEMA_VERSION) return;
+
+  // Migrate requests from 4-stage to 5-stage order
+  const requests = readJSON(REQUESTS_KEY, {});
+  Object.keys(requests).forEach(code => {
+    const r = requests[code];
+    if (typeof r.stage !== 'number') r.stage = 0;
+    // old: 0=received,1=review,2=final,3=delivered
+    // new: 0=received,1=review,2=progress,3=final,4=delivered
+    if (r.stage === 3) r.stage = 4;
+    else if (r.stage === 2) r.stage = 3;
+    r.status = 'stage.' + ORDER_STAGES[Math.min(r.stage, FINAL_STAGE_INDEX)].key;
+    r.cancelled = !!r.cancelled;
+  });
+  writeJSON(REQUESTS_KEY, requests);
+
+  localStorage.setItem(SCHEMA_VERSION_KEY, String(SCHEMA_VERSION));
+}
+
+/* ----------------------------------------------------------
    SCREEN NAVIGATION
    ---------------------------------------------------------- */
 const NAV_MAP = {
   homeScreen:'home', formScreen:'request', maintenanceFormScreen:'maintenance',
   advertiseFormScreen:'advertising', trackScreen:'track',
-  walletScreen:'wallet', dashboardScreen:'dashboard'
+  walletScreen:'wallet', dashboardScreen:'dashboard', adminScreen:''
 };
 
 function syncNav(){
@@ -2766,6 +3316,8 @@ function syncNav(){
     btn.classList.toggle('active', btn.dataset.amgNav === active);
   });
 }
+
+let lastFocusedEl = null;
 
 function openScreen(id, options){
   options = options || {};
@@ -2855,14 +3407,22 @@ function goAmg(section){
     form.setAttribute('data-form-type','project');
     currentStep = 1;
     form.reset();
+    pendingAttachments = [];
+    renderAttachmentList();
     $$('.error').forEach(e => e.textContent = '');
     openScreen('formScreen', { resetHistory:true });
     restoreDraft();
     updateProgress();
     return;
   }
-  if (id === 'maintenanceFormScreen') document.getElementById('maintenanceForm').reset();
-  if (id === 'advertiseFormScreen')   document.getElementById('advertiseForm').reset();
+  if (id === 'maintenanceFormScreen'){
+    document.getElementById('maintenanceForm').reset();
+    clearErrors('maintenanceForm');
+  }
+  if (id === 'advertiseFormScreen'){
+    document.getElementById('advertiseForm').reset();
+    clearErrors('advertiseForm');
+  }
 
   openScreen(id);
 }
@@ -2870,6 +3430,54 @@ function goAmg(section){
 $$('[data-amg-nav]').forEach(btn => {
   btn.addEventListener('click', () => goAmg(btn.dataset.amgNav));
 });
+
+/* ----------------------------------------------------------
+   VALIDATION HELPERS
+   ---------------------------------------------------------- */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^[+\d\s()-]{6,}$/;
+
+function setFieldError(field, message){
+  if (!field) return;
+  const errId = 'err-' + field.name;
+  const errEl = document.getElementById(errId);
+  if (errEl) errEl.textContent = message || '';
+  if (message) field.setAttribute('aria-invalid','true');
+  else field.removeAttribute('aria-invalid');
+}
+
+function clearErrors(formId){
+  const f = document.getElementById(formId);
+  if (!f) return;
+  f.querySelectorAll('.error').forEach(e => e.textContent = '');
+  f.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
+}
+
+function validateSimpleForm(formId, requiredNames, phoneNames){
+  const f = document.getElementById(formId);
+  if (!f) return false;
+  clearErrors(formId);
+  let valid = true;
+  requiredNames.forEach(name => {
+    const field = f.elements[name];
+    if (!field) return;
+    const isSelect = field.tagName === 'SELECT';
+    const empty = isSelect ? !field.value : !String(field.value || '').trim();
+    if (empty){
+      setFieldError(field, t('err.required'));
+      valid = false;
+    }
+  });
+  (phoneNames || []).forEach(name => {
+    const field = f.elements[name];
+    if (!field || !field.value) return;
+    if (!PHONE_RE.test(field.value.trim())){
+      setFieldError(field, t('err.phone'));
+      valid = false;
+    }
+  });
+  return valid;
+}
 
 /* ----------------------------------------------------------
    DRAFT PERSISTENCE
@@ -2900,6 +3508,7 @@ function restoreDraft(){
       field.checked = Array.isArray(data.services) && data.services.includes(field.value);
       return;
     }
+    if (field.type === 'file') return;
     if (Object.prototype.hasOwnProperty.call(data, field.name)){
       field.value = data[field.name] === null ? '' : data[field.name];
     }
@@ -2907,14 +3516,60 @@ function restoreDraft(){
 }
 
 /* ----------------------------------------------------------
-   SERVICE CHECKBOXES
+   SERVICE CHECKBOXES (localised)
    ---------------------------------------------------------- */
-const SERVICE_OPTIONS = ['UI/UX Design','Frontend','Backend','Database','API','Mobile App','Admin Dashboard','Payment Gateway','Hosting','Domain','Security','AI Integration','Other'];
+const SERVICE_OPTIONS = [
+  'UI/UX Design','Frontend','Backend','Database','API','Mobile App',
+  'Admin Dashboard','Payment Gateway','Hosting','Domain','Security','AI Integration','Other'
+];
 const checkGrid = document.querySelector('.check-grid');
-if (checkGrid){
+function renderServiceCheckboxes(){
+  if (!checkGrid) return;
+  const checked = new Set([...checkGrid.querySelectorAll('input:checked')].map(i => i.value));
   checkGrid.innerHTML = SERVICE_OPTIONS.map(s =>
-    '<label class="check"><input type="checkbox" name="services" value="' + s + '">' + s + '</label>'
+    '<label class="check"><input type="checkbox" name="services" value="' + escapeHTML(s) + '"' +
+      (checked.has(s) ? ' checked' : '') + '>' +
+      escapeHTML(labelForService(s)) +
+    '</label>'
   ).join('');
+}
+renderServiceCheckboxes();
+
+/* ----------------------------------------------------------
+   ATTACHMENTS
+   ---------------------------------------------------------- */
+function renderAttachmentList(){
+  const list = document.getElementById('attachmentList');
+  if (!list) return;
+  list.innerHTML = pendingAttachments.map((f, i) =>
+    '<span class="attachment-chip">' +
+      '<span title="' + escapeHTML(f.name) + '">📎 ' + escapeHTML(f.name) + '</span>' +
+      '<button type="button" aria-label="Remove" data-remove-attachment="' + i + '">×</button>' +
+    '</span>'
+  ).join('');
+  list.querySelectorAll('[data-remove-attachment]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      pendingAttachments.splice(Number(btn.dataset.removeAttachment), 1);
+      renderAttachmentList();
+      saveDraft();
+    });
+  });
+}
+const attachmentsInput = document.getElementById('attachments');
+if (attachmentsInput){
+  attachmentsInput.addEventListener('change', e => {
+    const files = [...e.target.files];
+    for (const file of files){
+      if (file.size > MAX_FILE_BYTES){
+        showToast(t('err.fileTooBig'));
+        continue;
+      }
+      pendingAttachments.push({ name:file.name, size:file.size, type:file.type });
+    }
+    e.target.value = '';
+    renderAttachmentList();
+    saveDraft();
+  });
 }
 
 /* ----------------------------------------------------------
@@ -2931,7 +3586,19 @@ function normalizeWhatsAppNumber(value){
 }
 function openWhatsApp(number, message){
   const url = 'https://wa.me/' + normalizeWhatsAppNumber(number) + '?text=' + encodeURIComponent(message);
-  window.open(url, '_blank', 'noopener');
+  let win = null;
+  try { win = window.open(url, '_blank', 'noopener'); } catch { win = null; }
+  if (!win || win.closed || typeof win.closed === 'undefined'){
+    // Popup blocked — show a fallback link
+    const fb = document.getElementById('waFallback');
+    if (fb){
+      fb.hidden = false;
+      fb.innerHTML = escapeHTML(t('success.waBlocked')) +
+        ' <a href="' + url + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(t('success.waLink')) + '</a>';
+    }
+    return false;
+  }
+  return true;
 }
 function getSelectedSupportNumber(){
   const field = form ? form.querySelector('[name="supportAgent"]') : null;
@@ -2941,7 +3608,7 @@ function getSelectedSupportNumber(){
 }
 
 /* ----------------------------------------------------------
-   PROGRESS + VALIDATION
+   PROGRESS + VALIDATION (project form)
    ---------------------------------------------------------- */
 function updateProgress(){
   const percent = currentStep * 20;
@@ -2965,7 +3632,9 @@ function updateProgress(){
 
 function validateStep(){
   $$('.error').forEach(e => e.textContent = '');
+  form.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
   let valid = true;
+
   const required = currentStep === 1 ? ['fullName','phone','whatsapp','supportAgent']
                  : currentStep === 2 ? ['projectName','projectType']
                  : currentStep === 3 ? ['description'] : [];
@@ -2974,22 +3643,24 @@ function validateStep(){
     const field = form.elements[name];
     if (!field) return;
     const isSelect = field.tagName === 'SELECT';
-    const empty = isSelect ? !field.value : !field.value.trim();
+    const empty = isSelect ? !field.value : !String(field.value || '').trim();
     if (empty){
-      const err = field.parentElement.querySelector('.error');
-      if (err) err.textContent = t('err.required');
+      setFieldError(field, t('err.required'));
       valid = false;
     }
   });
 
-  const phoneRe = /^[+\d\s()-]{7,}$/;
   if (currentStep === 1){
-    if (form.elements.phone.value && !phoneRe.test(form.elements.phone.value)){
-      form.elements.phone.parentElement.querySelector('.error').textContent = t('err.phone');
-      valid = false;
-    }
-    if (form.elements.whatsapp.value && !phoneRe.test(form.elements.whatsapp.value)){
-      form.elements.whatsapp.parentElement.querySelector('.error').textContent = t('err.whatsapp');
+    ['phone','whatsapp'].forEach(name => {
+      const field = form.elements[name];
+      if (field && field.value && !PHONE_RE.test(field.value.trim())){
+        setFieldError(field, t(name === 'phone' ? 'err.phone' : 'err.whatsapp'));
+        valid = false;
+      }
+    });
+    const emailField = form.elements.email;
+    if (emailField && emailField.value.trim() && !EMAIL_RE.test(emailField.value.trim())){
+      setFieldError(emailField, t('err.email'));
       valid = false;
     }
   }
@@ -3005,18 +3676,30 @@ function val(name){
   const v = (el.value || '').trim();
   return v || t('wa.none');
 }
+function valLabel(fieldName){
+  const el = form.elements[fieldName];
+  if (!el) return t('wa.none');
+  const v = (el.value || '').trim();
+  if (!v) return t('wa.none');
+  return labelForValue(fieldName, v);
+}
 function buildReview(){
-  const services = $$('input[name="services"]:checked').map(i => i.value).join('، ') || t('wa.noServices');
+  const services = $$('input[name="services"]:checked').map(i => labelForService(i.value)).join('، ') || t('wa.noServices');
   const box = document.getElementById('reviewContent');
   if (!box) return;
+
+  const agentLabel = getAgentLabel(val('supportAgent'));
+  const attachmentsText = pendingAttachments.length
+    ? pendingAttachments.map(f => f.name).join('، ')
+    : t('wa.none');
 
   box.innerHTML =
     '<div class="rev-card">' +
       '<h3>👤 ' + t('wa.customer').replace(/[👤*\s]/g,'') + '</h3>' +
       '<div class="rev-grid">' +
         '<div><small>' + t('field.fullName') + '</small><p>' + escapeHTML(val('fullName')) + '</p></div>' +
-        '<div><small>' + t('field.phone') + ' / WhatsApp</small><p>' + escapeHTML(val('phone')) + ' / ' + escapeHTML(val('whatsapp')) + '</p></div>' +
-        '<div class="full"><small>' + t('f.agent').replace(/<[^>]*>/g,'') + '</small><p>' + escapeHTML(form.elements.supportAgent.value || t('wa.none')) + '</p></div>' +
+        '<div><small>' + t('field.phone') + ' / WhatsApp</small><p dir="ltr">' + escapeHTML(val('phone')) + ' / ' + escapeHTML(val('whatsapp')) + '</p></div>' +
+        '<div class="full"><small>' + t('f.agent').replace(/<[^>]*>/g,'') + '</small><p>' + escapeHTML(agentLabel) + '</p></div>' +
         '<div><small>' + t('field.usageCode') + '</small><p>' + escapeHTML(val('usageCode')) + '</p></div>' +
         '<div><small>' + t('field.email') + '</small><p>' + escapeHTML(val('email')) + '</p></div>' +
         '<div><small>' + t('field.country') + ' / ' + t('field.city') + '</small><p>' + escapeHTML(val('country')) + ' / ' + escapeHTML(val('city')) + '</p></div>' +
@@ -3026,20 +3709,22 @@ function buildReview(){
       '<h3>💻 ' + t('wa.projectDetails').replace(/[💻*\s]/g,'') + '</h3>' +
       '<div class="rev-grid">' +
         '<div><small>' + t('field.projectName') + '</small><p>' + escapeHTML(val('projectName')) + '</p></div>' +
-        '<div><small>' + t('field.projectType') + '</small><p>' + escapeHTML(val('projectType')) + '</p></div>' +
+        '<div><small>' + t('field.projectType') + '</small><p>' + escapeHTML(valLabel('projectType')) + '</p></div>' +
         '<div class="full"><small>' + t('field.description') + '</small><p>' + escapeHTML(val('description')) + '</p></div>' +
         '<div class="full"><small>' + t('field.services') + '</small><p>' + escapeHTML(services) + '</p></div>' +
         '<div class="full"><small>' + t('field.features') + '</small><p>' + escapeHTML(val('features')) + '</p></div>' +
-        '<div><small>' + t('field.duration') + '</small><p>' + escapeHTML(val('duration')) + '</p></div>' +
-        '<div><small>' + t('field.priority') + '</small><p>' + escapeHTML(val('priority')) + '</p></div>' +
+        '<div><small>' + t('field.budget') + '</small><p>' + escapeHTML(valLabel('budget')) + '</p></div>' +
+        '<div><small>' + t('field.duration') + '</small><p>' + escapeHTML(valLabel('duration')) + '</p></div>' +
+        '<div><small>' + t('field.deadline') + '</small><p>' + escapeHTML(val('deadline')) + '</p></div>' +
+        '<div><small>' + t('field.priority') + '</small><p>' + escapeHTML(valLabel('priority')) + '</p></div>' +
+        '<div class="full"><small>' + t('field.reference') + '</small><p>' + escapeHTML(val('reference')) + '</p></div>' +
+        '<div class="full"><small>' + t('field.attachments') + '</small><p>' + escapeHTML(attachmentsText) + '</p></div>' +
       '</div>' +
     '</div>';
 }
 
 /* ----------------------------------------------------------
    UNIQUE ORDER ID
-   Guaranteed non-repeating: date + base36 timestamp + random,
-   verified against every stored request until unique.
    ---------------------------------------------------------- */
 function generateUniqueOrderId(){
   const requests = getRequests();
@@ -3070,10 +3755,13 @@ function generateUniqueOrderId(){
    MESSAGE BUILDER
    ---------------------------------------------------------- */
 function buildMessage(){
-  const services = $$('input[name="services"]:checked').map(i => i.value).join('، ') || t('wa.noServices');
+  const services = $$('input[name="services"]:checked').map(i => labelForService(i.value)).join('، ') || t('wa.noServices');
   const created = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-GB')
     + ' — ' + new Date().toLocaleTimeString(currentLang === 'ar' ? 'ar-EG' : 'en-GB', { hour:'2-digit', minute:'2-digit' });
-  const support = form.elements.supportAgent.value || getSelectedSupportNumber();
+  const agentLabel = getAgentLabel(val('supportAgent'));
+  const attachmentsText = pendingAttachments.length
+    ? pendingAttachments.map(f => f.name).join('، ')
+    : t('wa.none');
 
   return t('wa.project') + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
@@ -3081,22 +3769,28 @@ function buildMessage(){
     + '• ' + t('wa.name') + ': ' + val('fullName') + '\n'
     + '• 📱 ' + t('wa.phone') + ': ' + val('phone') + '\n'
     + '• 💬 ' + t('wa.whatsapp') + ': ' + val('whatsapp') + '\n'
-    + '• 👨‍💼 ' + t('wa.agent') + ': ' + support + '\n'
+    + '• 👨‍💼 ' + t('wa.agent') + ': ' + agentLabel + '\n'
     + '• 🏷️ ' + t('wa.usageCode') + ': ' + val('usageCode') + '\n'
     + '• 📧 ' + t('wa.email') + ': ' + val('email') + '\n'
     + '• 🌍 ' + t('wa.location') + ': ' + val('country') + ' / ' + val('city') + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.projectDetails') + '\n\n'
     + '• 📌 ' + t('wa.projectName') + ': ' + val('projectName') + '\n'
-    + '• 🗂️ ' + t('wa.projectType') + ': ' + val('projectType') + '\n'
-    + '• ⏱️ ' + t('wa.duration') + ': ' + val('duration') + '\n'
-    + '• ⚠️ ' + t('wa.priority') + ': ' + val('priority') + '\n\n'
+    + '• 🗂️ ' + t('wa.projectType') + ': ' + valLabel('projectType') + '\n'
+    + '• 💰 ' + t('wa.budget') + ': ' + valLabel('budget') + '\n'
+    + '• ⏱️ ' + t('wa.duration') + ': ' + valLabel('duration') + '\n'
+    + '• 📅 ' + t('wa.deadline') + ': ' + val('deadline') + '\n'
+    + '• ⚠️ ' + t('wa.priority') + ': ' + valLabel('priority') + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.desc') + '\n\n' + val('description') + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.services') + '\n\n' + services + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.features') + '\n\n' + val('features') + '\n\n'
+    + '━━━━━━━━━━━━━━━━━━\n\n'
+    + t('wa.reference') + '\n\n' + val('reference') + '\n\n'
+    + '━━━━━━━━━━━━━━━━━━\n\n'
+    + t('wa.attachments') + '\n\n' + attachmentsText + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.orderId') + '\n\n' + orderId + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
@@ -3194,6 +3888,17 @@ function relativeDate(iso){
   if (diff < 30) return t('date.daysAgo', { n: diff });
   return d.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-GB');
 }
+
+function computeTier(points){
+  // If points is an exact multiple of the tier, the next tier is one more.
+  const base = Math.floor(points / POINTS_TIER);
+  const nextTier = (base + 1) * POINTS_TIER;
+  const remaining = nextTier - points;
+  const withinTier = points % POINTS_TIER;
+  const progressPct = (withinTier / POINTS_TIER) * 100;
+  return { nextTier, remaining, progressPct };
+}
+
 function renderWalletScreen(){
   const wallet = getCurrentWallet();
   openScreen('walletScreen');
@@ -3213,16 +3918,14 @@ function renderWalletScreen(){
   document.getElementById('walletUsed').textContent = used;
   document.getElementById('walletLast').textContent = history.length ? relativeDate(history[0].createdAt) : '-';
 
-  const nextTier = (Math.floor(wallet.points / POINTS_TIER) + 1) * POINTS_TIER;
-  const remaining = nextTier - wallet.points;
-  const progressPct = ((wallet.points % POINTS_TIER) / POINTS_TIER) * 100;
+  const tier = computeTier(wallet.points);
 
-  document.getElementById('walletTierText').textContent = wallet.points + ' / ' + nextTier + ' ⭐';
+  document.getElementById('walletTierText').textContent = wallet.points + ' / ' + tier.nextTier + ' ⭐';
   const bar = document.getElementById('walletTierBar');
   bar.style.width = '0%';
-  requestAnimationFrame(() => { bar.style.width = progressPct + '%'; });
-  document.getElementById('walletTierNote').textContent = remaining > 0
-    ? t('wallet.tierNote', { n: remaining })
+  requestAnimationFrame(() => { bar.style.width = tier.progressPct + '%'; });
+  document.getElementById('walletTierNote').textContent = tier.remaining > 0
+    ? t('wallet.tierNote', { n: tier.remaining })
     : t('wallet.tierDone');
 
   const info = document.getElementById('usePointsInfo');
@@ -3238,12 +3941,11 @@ function renderWalletScreen(){
       const sign = entry.type === 'credit' ? '+' : '-';
       const badgeClass = entry.type === 'credit' ? 'type-credit' : 'type-debit';
       const label = entry.type === 'credit' ? t('wallet.credit') : t('wallet.debit');
-      const reason = entry.reason === 'استخدام النقاط' || entry.reason === 'Points redemption'
-        ? t('wallet.usedReason') : escapeHTML(entry.reason);
+      const reason = translateReason(entry.reason);
       return '<li>' +
         '<div class="left">' +
           '<span class="amount">' + sign + entry.amount + ' ⭐</span>' +
-          '<span class="reason">' + reason + '</span>' +
+          '<span class="reason">' + escapeHTML(reason) + '</span>' +
         '</div>' +
         '<div style="text-align:end">' +
           '<span class="date">' + relativeDate(entry.createdAt) + '</span>' +
@@ -3259,6 +3961,8 @@ function renderWalletScreen(){
     reqList.innerHTML = '<li style="justify-content:center;color:var(--muted)">' + t('wallet.emptyReq') + '</li>';
   } else {
     reqList.innerHTML = requests.slice(0, 10).map(req => {
+      const statusKey = req.status === 'approved' ? 'wallet.approved'
+                      : req.status === 'rejected' ? 'wallet.rejected' : 'wallet.pending';
       const statusClass = req.status === 'approved' ? 'status-done'
                         : req.status === 'rejected' ? 'status-rejected' : 'status-pending';
       return '<li>' +
@@ -3268,7 +3972,7 @@ function renderWalletScreen(){
         '</div>' +
         '<div style="text-align:end">' +
           '<span class="date">' + relativeDate(req.createdAt) + '</span>' +
-          '<span class="order-status ' + statusClass + '">' + t('wallet.pending') + '</span>' +
+          '<span class="order-status ' + statusClass + '">' + t(statusKey) + '</span>' +
         '</div>' +
       '</li>';
     }).join('');
@@ -3289,37 +3993,35 @@ function updateWalletBadge(){
 const getRequests  = () => readJSON(REQUESTS_KEY, {});
 const saveRequests = r => writeJSON(REQUESTS_KEY, r);
 
-const ORDER_STAGES = [
-  { key:'received'  },
-  { key:'review'    },
-  { key:'progress'  },
-  { key:'final'     },
-  { key:'delivered' }
-];
-
 function saveRequest(code, type, payload, stageIndex){
   const requests = getRequests();
+  const now = new Date().toISOString();
   requests[code] = {
     code, type, payload,
     stage: stageIndex,
+    cancelled: false,
     status: 'stage.' + ORDER_STAGES[stageIndex].key,
-    createdAt: new Date().toISOString()
+    createdAt: now,
+    updatedAt: now,
+    activity: [{ stage: stageIndex, status: 'stage.' + ORDER_STAGES[stageIndex].key, at: now }]
   };
   saveRequests(requests);
   return requests[code];
 }
 
-/* ----------------------------------------------------------
-   FIELD LABELS
-   ---------------------------------------------------------- */
-const FIELD_LABEL_KEYS = {
-  fullName:'field.fullName', phone:'field.phone', whatsapp:'field.whatsapp',
-  usageCode:'field.usageCode', email:'field.email', country:'field.country',
-  city:'field.city', projectName:'field.projectName', projectType:'field.projectType',
-  description:'field.description', features:'field.features', reference:'field.reference',
-  duration:'field.duration', deadline:'field.deadline', priority:'field.priority',
-  walletId:'field.walletId'
-};
+function cancelRequest(code){
+  const requests = getRequests();
+  if (!requests[code]) return false;
+  if (Number(requests[code].stage || 0) >= FINAL_STAGE_INDEX) return false;
+  const now = new Date().toISOString();
+  requests[code].cancelled = true;
+  requests[code].status = 'track.cancelled';
+  requests[code].updatedAt = now;
+  requests[code].activity = Array.isArray(requests[code].activity) ? requests[code].activity : [];
+  requests[code].activity.push({ stage: Number(requests[code].stage || 0), status:'track.cancelled', at:now });
+  saveRequests(requests);
+  return true;
+}
 
 /* ----------------------------------------------------------
    TRACKING
@@ -3340,24 +4042,40 @@ function renderTrackResult(code){
     return;
   }
 
-  const stage = Number(record.stage || 0);
+  const stage = Math.min(Number(record.stage || 0), FINAL_STAGE_INDEX);
   const payload = record.payload || {};
+  const isCancelled = !!record.cancelled;
+  const isDelivered = !isCancelled && stage >= FINAL_STAGE_INDEX;
 
   const details = Object.keys(payload)
-    .filter(key => key !== 'services' && payload[key] && payload[key] !== 'لا يوجد' && payload[key] !== 'None')
+    .filter(key => key !== 'services' && key !== 'attachments' &&
+                   payload[key] && payload[key] !== 'لا يوجد' && payload[key] !== 'None')
     .map(key => {
       const labelKey = FIELD_LABEL_KEYS[key];
       const label = labelKey ? t(labelKey) : key;
-      return '<li class="detail-item"><span>' + escapeHTML(label) + '</span><strong>' + escapeHTML(payload[key]) + '</strong></li>';
+      let value = payload[key];
+      if (VALUE_LABEL_KEYS[key] && VALUE_LABEL_KEYS[key][value]){
+        value = t(VALUE_LABEL_KEYS[key][value]);
+      }
+      return '<li class="detail-item"><span>' + escapeHTML(label) + '</span><strong>' + escapeHTML(value) + '</strong></li>';
     }).join('');
 
   const services = Array.isArray(payload.services) && payload.services.length
-    ? '<li class="detail-item"><span>' + t('field.services') + '</span><strong>' + escapeHTML(payload.services.join('، ')) + '</strong></li>'
+    ? '<li class="detail-item"><span>' + t('field.services') + '</span><strong>' +
+      escapeHTML(payload.services.map(labelForService).join('، ')) + '</strong></li>'
+    : '';
+
+  const attachments = Array.isArray(payload.attachments) && payload.attachments.length
+    ? '<li class="detail-item"><span>' + t('field.attachments') + '</span><strong>' +
+      escapeHTML(payload.attachments.map(a => a.name || a).join('، ')) + '</strong></li>'
     : '';
 
   const timeline = ORDER_STAGES.map((s, i) => {
-    const cls = i < stage ? 'done' : i === stage ? 'current' : '';
-    const dot = i < stage ? '✓' : i === stage ? '●' : '○';
+    let cls = '';
+    if (isCancelled) cls = 'cancelled';
+    else if (i < stage) cls = 'done';
+    else if (i === stage) cls = 'current';
+    const dot = cls === 'done' ? '✓' : cls === 'current' ? '●' : cls === 'cancelled' ? '✕' : '○';
     return '<div class="tl-step ' + cls + '">' +
       '<div class="tl-dot">' + dot + '</div>' +
       '<div class="tl-body">' +
@@ -3368,17 +4086,41 @@ function renderTrackResult(code){
   }).join('');
 
   const typeLabels = { project:'type.project', maintenance:'type.maintenance', advertise:'type.advertise' };
+  const currentStageKey = ORDER_STAGES[stage].key;
+
+  const chip = isCancelled
+    ? '<span class="cancelled-chip">' + t('track.cancelledBadge') + '</span>'
+    : isDelivered
+      ? '<span class="delivered-chip">' + t('track.deliveredBadge') + '</span>'
+      : '';
+
+  const currentStatus = isCancelled
+    ? t('track.cancelled')
+    : t('stage.' + currentStageKey);
+
+  const actions = (!isCancelled && !isDelivered)
+    ? '<div class="track-actions">' +
+        '<button type="button" class="danger" data-cancel-request="' + escapeHTML(record.code) + '">' +
+          t('btn.cancelRequest') +
+        '</button>' +
+      '</div>'
+    : '';
 
   container.innerHTML =
     '<div class="track-layout">' +
       '<div class="track-summary">' +
         '<span class="badge">' + t(typeLabels[record.type] || 'track.request') + '</span>' +
-        '<h3>' + escapeHTML(record.code) + '</h3>' +
+        '<div class="order-code-row">' +
+          '<h3>' + escapeHTML(record.code) + '</h3>' +
+          chip +
+        '</div>' +
         '<p>' + t('track.created') + ' ' + new Date(record.createdAt).toLocaleString(currentLang === 'ar' ? 'ar-EG' : 'en-GB') + '</p>' +
-        '<p style="margin-top:8px">' + t('track.current') + ' <b style="color:var(--green)">' + t(record.status) + '</b></p>' +
+        '<p style="margin-top:8px">' + t('track.current') + ' <b style="color:' +
+          (isCancelled ? 'var(--danger)' : 'var(--green)') + '">' + escapeHTML(currentStatus) + '</b></p>' +
+        actions +
       '</div>' +
       '<div>' +
-        '<ul class="detail-list">' + details + services + '</ul>' +
+        '<ul class="detail-list">' + details + services + attachments + '</ul>' +
         '<div class="timeline">' +
           '<h4>' + t('track.timeline') + '</h4>' +
           timeline +
@@ -3387,6 +4129,17 @@ function renderTrackResult(code){
     '</div>';
 
   container.classList.add('visible');
+
+  const cancelBtn = container.querySelector('[data-cancel-request]');
+  if (cancelBtn){
+    cancelBtn.addEventListener('click', () => {
+      if (!confirm(t('track.cancelConfirm'))) return;
+      if (cancelRequest(cancelBtn.dataset.cancelRequest)){
+        showToast(t('toast.requestCancelled'));
+        renderTrackResult(code);
+      }
+    });
+  }
 }
 
 /* ----------------------------------------------------------
@@ -3418,8 +4171,8 @@ function renderDashboardScreen(){
     : t('dash.helloGuest');
 
   const total = list.length;
-  const completed = list.filter(r => Number(r.stage || 0) >= ORDER_STAGES.length - 1).length;
-  const inProgress = total - completed;
+  const completed = list.filter(r => !r.cancelled && Number(r.stage || 0) >= FINAL_STAGE_INDEX).length;
+  const inProgress = list.filter(r => !r.cancelled && Number(r.stage || 0) < FINAL_STAGE_INDEX).length;
 
   animateNumber(document.getElementById('dashTotal'), total);
   animateNumber(document.getElementById('dashCompleted'), completed);
@@ -3439,15 +4192,19 @@ function renderDashboardScreen(){
   } else {
     const typeKeys = { project:'type.project', maintenance:'type.maintenance', advertise:'type.advertise' };
     const rows = list.slice(0, 8).map(r => {
-      const stage = Number(r.stage || 0);
-      const isDone = stage >= ORDER_STAGES.length - 1;
-      const statusClass = isDone ? 'status-done' : 'status-pending';
-      const icon = isDone ? '🟢' : '🟡';
+      const stage = Math.min(Number(r.stage || 0), FINAL_STAGE_INDEX);
+      const isDone = !r.cancelled && stage >= FINAL_STAGE_INDEX;
+      const statusClass = r.cancelled ? 'status-cancelled'
+                        : isDone ? 'status-done' : 'status-pending';
+      const icon = r.cancelled ? '⚪' : isDone ? '🟢' : '🟡';
+      const statusText = r.cancelled
+        ? t('track.cancelled')
+        : t('stage.' + ORDER_STAGES[stage].key);
       return '<tr>' +
         '<td class="code">' + escapeHTML(r.code) + '</td>' +
         '<td>' + t(typeKeys[r.type] || 'track.request') + '</td>' +
         '<td>' + new Date(r.createdAt).toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-GB') + '</td>' +
-        '<td><span class="order-status ' + statusClass + '">' + icon + ' ' + t(r.status) + '</span></td>' +
+        '<td><span class="order-status ' + statusClass + '">' + icon + ' ' + escapeHTML(statusText) + '</span></td>' +
         '<td><button class="secondary" type="button" style="padding:7px 13px;font-size:11px;border-radius:10px" data-track-code="' + escapeHTML(r.code) + '">' + t('dash.trackBtn') + '</button></td>' +
       '</tr>';
     }).join('');
@@ -3505,6 +4262,130 @@ function renderDashboardScreen(){
 }
 
 /* ----------------------------------------------------------
+   DEMO ADMIN
+   ---------------------------------------------------------- */
+function adminRequestMatches(r, query, filter){
+  const q = String(query || '').trim().toLowerCase();
+  const payload = r.payload || {};
+  const haystack = [r.code, r.type, payload.fullName, payload.projectName, payload.email, payload.phone]
+    .filter(Boolean).join(' ').toLowerCase();
+  const stage = Number(r.stage || 0);
+  const status = r.cancelled ? 'cancelled' : stage >= FINAL_STAGE_INDEX ? 'completed' : 'active';
+  return (!q || haystack.includes(q)) && (filter === 'all' || filter === status);
+}
+
+function renderAdminStats(list, allPoints){
+  const total = list.length;
+  const completed = list.filter(r => !r.cancelled && Number(r.stage || 0) >= FINAL_STAGE_INDEX).length;
+  const active = list.filter(r => !r.cancelled && Number(r.stage || 0) < FINAL_STAGE_INDEX).length;
+  const pendingPoints = allPoints.filter(r => r.status === 'pending').length;
+  ['adminTotal','adminActive','adminCompleted','adminPointsPending'].forEach((id,i) => {
+    const values = [total, active, completed, pendingPoints];
+    const el = document.getElementById(id);
+    if (el) animateNumber(el, values[i]);
+  });
+}
+
+function showAdminRequestDetails(code){
+  const record = getRequests()[code];
+  if (!record) return;
+  const p = record.payload || {};
+  const stage = Math.min(Number(record.stage || 0), FINAL_STAGE_INDEX);
+  const modal = document.getElementById('adminDetailsModal');
+  const body = document.getElementById('adminDetailsBody');
+  document.getElementById('adminDetailsTitle').textContent = code + ' · ' + (p.projectName || t('track.request'));
+  const activity = Array.isArray(record.activity) ? record.activity : [];
+  const fields = [
+    ['Client', p.fullName], ['Phone', p.phone], ['WhatsApp', p.whatsapp], ['Email', p.email],
+    ['Project', p.projectName], ['Type', labelForValue('projectType', p.projectType)],
+    ['Budget', labelForValue('budget', p.budget)], ['Duration', labelForValue('duration', p.duration)],
+    ['Priority', labelForValue('priority', p.priority)], ['Created', new Date(record.createdAt).toLocaleString(currentLang === 'ar' ? 'ar-EG' : 'en-GB')],
+    ['Status', record.cancelled ? t('track.cancelled') : t('stage.' + ORDER_STAGES[stage].key)]
+  ].filter(x => x[1]);
+  const details = fields.map(([label,value]) => '<div class="admin-detail"><span>'+escapeHTML(label)+'</span><strong>'+escapeHTML(value)+'</strong></div>').join('');
+  const description = p.description ? '<div class="admin-detail" style="grid-column:1/-1"><span>Description</span><strong>'+escapeHTML(p.description)+'</strong></div>' : '';
+  const services = Array.isArray(p.services) && p.services.length ? '<div class="admin-detail" style="grid-column:1/-1"><span>Services</span><strong>'+escapeHTML(p.services.map(labelForService).join(', '))+'</strong></div>' : '';
+  const activityHtml = activity.slice().reverse().slice(0,10).map(a => '<div class="activity-item"><span class="activity-dot"></span><div><strong>'+escapeHTML(t(a.status || 'track.request'))+'</strong><small>'+new Date(a.at).toLocaleString(currentLang === 'ar' ? 'ar-EG' : 'en-GB')+'</small></div></div>').join('');
+  body.innerHTML = '<div class="admin-details-grid">'+details+description+services+'</div><h4 style="margin:20px 0 0">Activity Timeline</h4><div class="activity-list">'+(activityHtml || '<p style="color:var(--muted)">No activity yet.</p>')+'</div>';
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+}
+
+function closeAdminDetails(){
+  const modal = document.getElementById('adminDetailsModal');
+  if (!modal) return;
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+}
+
+function renderAdminScreen(){
+  openScreen('adminScreen');
+  const requests = getRequests();
+  const allList = Object.values(requests).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const wallets = getWallets();
+  const allRequests = [];
+  wallets.forEach(w => (w.pointsRequests || []).forEach(r => allRequests.push({ walletId:w.id, walletName:w.name, ...r })));
+  renderAdminStats(allList, allRequests);
+
+  const query = document.getElementById('adminSearch')?.value || '';
+  const filter = document.getElementById('adminStatusFilter')?.value || 'all';
+  const list = allList.filter(r => adminRequestMatches(r, query, filter));
+  const wrap = document.getElementById('adminOrdersWrap');
+
+  if (!list.length){
+    wrap.innerHTML = '<div class="dash-empty"><div class="de-icon">🔎</div><h4>No matching requests</h4><p>Try another search or status filter.</p></div>';
+  } else {
+    wrap.innerHTML = list.map(r => {
+      const stage = Math.min(Number(r.stage || 0), FINAL_STAGE_INDEX);
+      const options = ORDER_STAGES.map((st, i) => '<option value="'+i+'"'+(i === stage ? ' selected' : '')+'>'+t('stage.'+st.key)+'</option>').join('');
+      const client = r.payload?.fullName || 'Unknown client';
+      const project = r.payload?.projectName || r.type;
+      return '<div class="admin-row">' +
+        '<div><span class="code">'+escapeHTML(r.code)+'</span><small>'+escapeHTML(client)+' · '+escapeHTML(project)+' · '+new Date(r.createdAt).toLocaleDateString()+(r.cancelled ? ' · '+t('admin.cancelled') : '')+'</small></div>' +
+        '<select data-stage-for="'+escapeHTML(r.code)+'">'+options+'</select>' +
+        '<div class="actions"><button type="button" data-details-for="'+escapeHTML(r.code)+'">View</button><button type="button" class="danger" data-cancel-for="'+escapeHTML(r.code)+'"'+((Number(r.stage||0)>=FINAL_STAGE_INDEX || r.cancelled)?' disabled':'')+'>'+t('admin.cancel')+'</button></div>' +
+      '</div>';
+    }).join('');
+
+    wrap.querySelectorAll('[data-details-for]').forEach(btn => btn.addEventListener('click', () => showAdminRequestDetails(btn.dataset.detailsFor)));
+    wrap.querySelectorAll('[data-stage-for]').forEach(sel => sel.addEventListener('change', () => {
+      const rs = getRequests(); const code = sel.dataset.stageFor; if (!rs[code]) return;
+      const now = new Date().toISOString(); const next = Number(sel.value);
+      rs[code].stage = next; rs[code].cancelled = false; rs[code].status = 'stage.' + ORDER_STAGES[next].key; rs[code].updatedAt = now;
+      rs[code].activity = Array.isArray(rs[code].activity) ? rs[code].activity : [];
+      rs[code].activity.push({stage:next,status:rs[code].status,at:now});
+      saveRequests(rs); showToast('✅ ' + code + ' → ' + t('stage.' + ORDER_STAGES[next].key)); renderAdminScreen();
+    }));
+    wrap.querySelectorAll('[data-cancel-for]').forEach(btn => btn.addEventListener('click', () => {
+      if (cancelRequest(btn.dataset.cancelFor)){ showToast(t('toast.requestCancelled')); renderAdminScreen(); }
+    }));
+  }
+
+  const pointsWrap = document.getElementById('adminPointsWrap');
+  if (!allRequests.length){
+    pointsWrap.innerHTML = '<p style="color:var(--muted);font-size:12.5px">' + t('admin.noPoints') + '</p>';
+  } else {
+    pointsWrap.innerHTML = allRequests.map(r => {
+      const statusKey = r.status === 'approved' ? 'wallet.approved' : r.status === 'rejected' ? 'wallet.rejected' : 'wallet.pending';
+      return '<div class="admin-row"><div><span class="code">'+escapeHTML(r.id)+'</span><small>'+escapeHTML(r.walletName)+' · '+r.amount+' ⭐ · '+t(statusKey)+'</small></div><div class="actions"><button type="button" data-approve="'+escapeHTML(r.id)+'" data-wallet="'+escapeHTML(r.walletId)+'"'+(r.status!=='pending'?' disabled':'')+'>'+t('admin.approve')+'</button><button type="button" class="danger" data-reject="'+escapeHTML(r.id)+'" data-wallet="'+escapeHTML(r.walletId)+'"'+(r.status!=='pending'?' disabled':'')+'>'+t('admin.reject')+'</button></div></div>';
+    }).join('');
+    pointsWrap.querySelectorAll('[data-approve],[data-reject]').forEach(btn => btn.addEventListener('click', () => {
+      const id = btn.dataset.approve || btn.dataset.reject, walletId = btn.dataset.wallet, newStatus = btn.dataset.approve ? 'approved' : 'rejected';
+      const ws = getWallets(), idx = ws.findIndex(w => w.id === walletId); if (idx < 0) return;
+      const w = ws[idx]; const req = (w.pointsRequests || []).find(x => x.id === id); if (!req || req.status !== 'pending') return;
+      req.status = newStatus;
+      if (newStatus === 'approved') addTransaction(w, 'debit', req.amount, 'request');
+      ws[idx] = w; saveWallets(ws); showToast('✅ ' + id + ' → ' + newStatus); renderAdminScreen();
+    }));
+  }
+}
+
+// Admin controls are intentionally client-side for this demo. Production must move authorization to the server.
+document.getElementById('adminSearch')?.addEventListener('input', () => renderAdminScreen());
+document.getElementById('adminStatusFilter')?.addEventListener('change', () => renderAdminScreen());
+document.getElementById('adminDetailsClose')?.addEventListener('click', closeAdminDetails);
+document.getElementById('adminDetailsModal')?.addEventListener('click', e => { if (e.target.id === 'adminDetailsModal') closeAdminDetails(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAdminDetails(); });
+
+/* ----------------------------------------------------------
    FORM SUBMIT — PROJECT
    ---------------------------------------------------------- */
 document.getElementById('nextButton').addEventListener('click', () => {
@@ -3524,12 +4405,15 @@ document.getElementById('nextButton').addEventListener('click', () => {
     usageCode: val('usageCode'), email: val('email'), country: val('country'), city: val('city'),
     projectName: val('projectName'), projectType: val('projectType'),
     description: val('description'), features: val('features'), reference: val('reference'),
-    duration: val('duration'), deadline: val('deadline'), priority: val('priority'),
-    services
+    budget: val('budget'), duration: val('duration'), deadline: val('deadline'), priority: val('priority'),
+    services,
+    attachments: pendingAttachments.map(f => ({ name:f.name, size:f.size, type:f.type }))
   };
 
   orderId = generateUniqueOrderId();
   document.getElementById('successOrderId').textContent = orderId;
+  const fb = document.getElementById('waFallback');
+  if (fb) fb.hidden = true;
 
   const wallet = getCurrentWallet();
   if (wallet) payload.walletId = wallet.id;
@@ -3560,26 +4444,36 @@ form.addEventListener('change', saveDraft);
    ---------------------------------------------------------- */
 document.getElementById('maintenanceSubmitBtn').addEventListener('click', () => {
   const f = document.getElementById('maintenanceForm');
+  const required = [
+    'maintenanceName','maintenancePhone','maintenanceWhatsapp',
+    'maintenanceSite','maintenanceType','maintenanceDescription','maintenanceSupportAgent'
+  ];
+  if (!validateSimpleForm('maintenanceForm', required, ['maintenancePhone','maintenanceWhatsapp'])){
+    showToast(t('err.fillAll'));
+    return;
+  }
+
   const name = f.elements.maintenanceName.value.trim();
   const phone = f.elements.maintenancePhone.value.trim();
   const whatsapp = f.elements.maintenanceWhatsapp.value.trim();
   const site = f.elements.maintenanceSite.value.trim();
-  const type = f.elements.maintenanceType.value;
+  const typeValue = f.elements.maintenanceType.value;
   const description = f.elements.maintenanceDescription.value.trim();
   const usageCode = f.elements.maintenanceUsageCode.value.trim();
   const agent = f.elements.maintenanceSupportAgent.value;
 
-  if (!name || !phone || !whatsapp || !site || !type || !description || !agent){
-    showToast(t('err.fillAll')); return;
-  }
+  const typeKey = 'opt.mt' + ({ technical:1, slow:2, design:3, payment:4, dashboard:5 }[typeValue] || 0);
+  const typeLabel = (typeValue === 'other') ? t('opt.other') : t(typeKey);
 
   orderId = generateUniqueOrderId();
   document.getElementById('successOrderId').textContent = orderId;
+  const fb = document.getElementById('waFallback');
+  if (fb) fb.hidden = true;
 
   const wallet = getCurrentWallet();
   const payload = {
     fullName: name, phone, whatsapp, usageCode,
-    projectName: site, projectType: type, description, priority:'عادية'
+    projectName: site, projectType: typeValue, description, priority:'normal'
   };
   if (wallet) payload.walletId = wallet.id;
 
@@ -3593,7 +4487,7 @@ document.getElementById('maintenanceSubmitBtn').addEventListener('click', () => 
     '💬 *WhatsApp:* ' + whatsapp + '\n' +
     '🏷️ *' + t('wa.usageCode') + ':* ' + (usageCode || t('wa.none')) + '\n' +
     '📌 *' + t('wa.site') + ':* ' + site + '\n' +
-    '🧩 *' + t('wa.problemType') + ':* ' + type + '\n' +
+    '🧩 *' + t('wa.problemType') + ':* ' + typeLabel + '\n' +
     '📝 *' + t('wa.desc').replace(/[📝*\s]/g,'') + ':* ' + description + '\n' +
     '🆔 *' + t('wa.orderId').replace(/[🆔*\s]/g,'') + ':* ' + orderId + '\n' +
     '⏰ ' + created;
@@ -3617,28 +4511,41 @@ document.getElementById('maintenanceBackHome').addEventListener('click', () => o
    ---------------------------------------------------------- */
 document.getElementById('advertiseSubmitBtn').addEventListener('click', () => {
   const f = document.getElementById('advertiseForm');
+  const required = [
+    'advertiseName','advertisePhone','advertiseWhatsapp','advertiseBrand',
+    'advertiseType','advertiseDescription','advertiseDuration','advertiseSupportAgent'
+  ];
+  if (!validateSimpleForm('advertiseForm', required, ['advertisePhone','advertiseWhatsapp'])){
+    showToast(t('err.fillAll'));
+    return;
+  }
+
   const name = f.elements.advertiseName.value.trim();
   const phone = f.elements.advertisePhone.value.trim();
   const whatsapp = f.elements.advertiseWhatsapp.value.trim();
   const brand = f.elements.advertiseBrand.value.trim();
-  const type = f.elements.advertiseType.value;
+  const typeValue = f.elements.advertiseType.value;
   const description = f.elements.advertiseDescription.value.trim();
-  const duration = f.elements.advertiseDuration.value;
+  const durationValue = f.elements.advertiseDuration.value;
   const usageCode = f.elements.advertiseUsageCode.value.trim();
   const agent = f.elements.advertiseSupportAgent.value;
 
-  if (!name || !phone || !whatsapp || !brand || !type || !description || !duration || !agent){
-    showToast(t('err.fillAll')); return;
-  }
+  const typeMap = { social:'opt.at1', video:'opt.at2', campaign:'opt.at3', google:'opt.at4', store:'opt.at5' };
+  const typeLabel = (typeValue === 'other') ? t('opt.other') : t(typeMap[typeValue] || 'opt.other');
+  const durationMap = { '7_days':'opt.ad1', '15_days':'opt.ad2', '30_days':'opt.ad3',
+                        '45_days':'opt.ad4', '60_days':'opt.ad5', '90_days':'opt.ad6' };
+  const durationLabel = t(durationMap[durationValue] || 'opt.ad1');
 
   orderId = generateUniqueOrderId();
   document.getElementById('successOrderId').textContent = orderId;
+  const fb = document.getElementById('waFallback');
+  if (fb) fb.hidden = true;
 
   const wallet = getCurrentWallet();
   const payload = {
     fullName: name, phone, whatsapp, usageCode,
-    projectName: brand, projectType: type,
-    description, duration, priority:'عادية'
+    projectName: brand, projectType: typeValue,
+    description, duration: durationValue, priority:'normal'
   };
   if (wallet) payload.walletId = wallet.id;
 
@@ -3652,8 +4559,8 @@ document.getElementById('advertiseSubmitBtn').addEventListener('click', () => {
     '💬 *WhatsApp:* ' + whatsapp + '\n' +
     '🏷️ *' + t('wa.usageCode') + ':* ' + (usageCode || t('wa.none')) + '\n' +
     '🏢 *' + t('wa.brand') + ':* ' + brand + '\n' +
-    '🧩 *' + t('wa.adType') + ':* ' + type + '\n' +
-    '⏱️ *' + t('wa.adDuration') + ':* ' + duration + '\n' +
+    '🧩 *' + t('wa.adType') + ':* ' + typeLabel + '\n' +
+    '⏱️ *' + t('wa.adDuration') + ':* ' + durationLabel + '\n' +
     '📝 *' + t('wa.desc').replace(/[📝*\s]/g,'') + ':* ' + description + '\n' +
     '🆔 *' + t('wa.orderId').replace(/[🆔*\s]/g,'') + ':* ' + orderId + '\n' +
     '⏰ ' + created;
@@ -3701,6 +4608,8 @@ document.getElementById('startButton').addEventListener('click', () => {
   form.setAttribute('data-form-type','project');
   currentStep = 1;
   form.reset();
+  pendingAttachments = [];
+  renderAttachmentList();
   $$('.error').forEach(e => e.textContent = '');
   openScreen('formScreen', { resetHistory:true });
   updateProgress();
@@ -3750,7 +4659,13 @@ document.getElementById('cancelWalletBtn').addEventListener('click', () => {
 document.getElementById('confirmWalletBtn').addEventListener('click', () => {
   const name = document.getElementById('walletForm').elements.walletName.value.trim();
   const phone = document.getElementById('walletForm').elements.walletPhone.value.trim();
-  if (!name || !phone){ showToast(t('err.namePhone')); return; }
+  clearErrors('walletForm');
+  if (!name || !phone){
+    if (!name) setFieldError(document.getElementById('walletForm').elements.walletName, t('err.required'));
+    if (!phone) setFieldError(document.getElementById('walletForm').elements.walletPhone, t('err.required'));
+    showToast(t('err.namePhone'));
+    return;
+  }
   createWallet(name, phone);
   document.getElementById('createWalletModal').classList.remove('open');
   showToast(t('toast.walletCreated'));
@@ -3814,6 +4729,36 @@ document.getElementById('confirmUsePointsBtn').addEventListener('click', () => {
 });
 
 /* ----------------------------------------------------------
+   WALLET SWITCH / LOGOUT
+   ---------------------------------------------------------- */
+document.getElementById('switchWalletBtn').addEventListener('click', () => {
+  const wallets = getWallets();
+  const current = getCurrentWallet();
+  const others = wallets.filter(w => !current || w.id !== current.id);
+  if (!others.length){
+    showToast(t('wallet.noOther'));
+    return;
+  }
+  // Simple prompt-based switch (keeps UI lightweight)
+  const options = others.map((w, i) => (i+1) + ') ' + w.name + ' — ' + w.points + ' ⭐').join('\n');
+  const choice = prompt(t('modal.switchWallet.title') + '\n\n' + options + '\n\n#');
+  const idx = Number(choice) - 1;
+  if (!isNaN(idx) && others[idx]){
+    setCurrentWallet(others[idx]);
+    updateWalletBadge();
+    showToast(t('toast.switchedWallet'));
+    renderWalletScreen();
+  }
+});
+document.getElementById('logoutWalletBtn').addEventListener('click', () => {
+  localStorage.removeItem(WALLET_SESSION_KEY);
+  currentWallet = null;
+  updateWalletBadge();
+  showToast(t('toast.loggedOut'));
+  openScreen('homeScreen', { resetHistory:true, pushHistory:false });
+});
+
+/* ----------------------------------------------------------
    CONTACT MODAL
    ---------------------------------------------------------- */
 function renderAgentList(){
@@ -3846,7 +4791,81 @@ document.getElementById('contactCancelBtn').addEventListener('click', () => {
 });
 document.getElementById('amgFloatingSupport').addEventListener('click', openContactModal);
 
+/* ----------------------------------------------------------
+   LEGAL MODALS
+   ---------------------------------------------------------- */
+const legalModal = document.getElementById('legalModal');
+function openLegal(titleKey, bodyKey, confirmKey){
+  document.getElementById('legalTitle').textContent = t(titleKey);
+  document.getElementById('legalBody').innerHTML =
+    '<p>' + escapeHTML(t(bodyKey)) + '</p>' +
+    (confirmKey ? '<p style="margin-top:14px"><button type="button" class="modal-primary" id="legalConfirmBtn">' + t(confirmKey) + '</button></p>' : '');
+  legalModal.classList.add('open');
+  const confirmBtn = document.getElementById('legalConfirmBtn');
+  if (confirmBtn){
+    confirmBtn.addEventListener('click', () => {
+      localStorage.removeItem(REQUESTS_KEY);
+      localStorage.removeItem(WALLETS_KEY);
+      localStorage.removeItem(WALLET_SESSION_KEY);
+      localStorage.removeItem(REWARD_TRANSACTIONS_KEY);
+      localStorage.removeItem(STORAGE_KEY);
+      currentWallet = null;
+      updateWalletBadge();
+      legalModal.classList.remove('open');
+      showToast('🗑️ ' + t('legal.data.title'));
+      openScreen('homeScreen', { resetHistory:true, pushHistory:false });
+    });
+  }
+}
+document.getElementById('privacyBtn').addEventListener('click', () => openLegal('legal.privacy.title','legal.privacy.body'));
+document.getElementById('termsBtn').addEventListener('click', () => openLegal('legal.terms.title','legal.terms.body'));
+document.getElementById('dataDeleteBtn').addEventListener('click', () => openLegal('legal.data.title','legal.data.body','legal.data.confirm'));
+document.getElementById('legalCloseBtn').addEventListener('click', () => legalModal.classList.remove('open'));
+
+/* ----------------------------------------------------------
+   MODAL A11Y: focus trap + restore focus
+   ---------------------------------------------------------- */
+function trapFocus(modal){
+  const focusables = modal.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  function handler(e){
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey && document.activeElement === first){
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last){
+      e.preventDefault(); first.focus();
+    }
+  }
+  modal._trapHandler = handler;
+  modal.addEventListener('keydown', handler);
+  setTimeout(() => first.focus(), 30);
+}
+function releaseFocus(modal){
+  if (modal._trapHandler){
+    modal.removeEventListener('keydown', modal._trapHandler);
+    delete modal._trapHandler;
+  }
+  if (lastFocusedEl && typeof lastFocusedEl.focus === 'function'){
+    lastFocusedEl.focus();
+  }
+  lastFocusedEl = null;
+}
+const _origAddOpen = { };
 $$('.modal').forEach(modal => {
+  const observer = new MutationObserver(() => {
+    if (modal.classList.contains('open')){
+      lastFocusedEl = document.activeElement;
+      trapFocus(modal);
+    } else {
+      releaseFocus(modal);
+    }
+  });
+  observer.observe(modal, { attributes:true, attributeFilter:['class'] });
+
   modal.addEventListener('click', e => {
     if (e.target === modal) modal.classList.remove('open');
   });
@@ -3942,7 +4961,6 @@ function setupCounters(){
 
 /* ==========================================================
    🎬 CINEMATIC INTRO SCRIPT
-   Plays EVERY page load — click / Esc / Enter / Skip to dismiss.
    ========================================================== */
 function startCinematicIntro(){
   const intro  = document.getElementById('cinematicIntro');
@@ -3989,7 +5007,6 @@ function startCinematicIntro(){
     finished = true;
     cancelAnimationFrame(animationFrame);
     intro.classList.add('is-done');
-    /* Lock body scroll while intro is visible, then release */
     document.body.style.overflow = '';
     setTimeout(() => { if (intro.parentNode) intro.remove(); }, 900);
   }
@@ -4031,7 +5048,6 @@ function startCinematicIntro(){
     else animationFrame = requestAnimationFrame(render);
   }
 
-  /* Lock scroll while intro is on screen */
   document.body.style.overflow = 'hidden';
 
   resizeCanvas();
@@ -4043,7 +5059,6 @@ function startCinematicIntro(){
 
   window.addEventListener('resize', resizeCanvas, { passive:true });
 
-  /* Dismissal triggers */
   if (skip) skip.addEventListener('click', finishIntro);
   intro.addEventListener('click', finishIntro);
   window.addEventListener('keydown', function esc(e){
@@ -4057,24 +5072,39 @@ function startCinematicIntro(){
 }
 
 /* ----------------------------------------------------------
+   ADMIN HASH ROUTE
+   ---------------------------------------------------------- */
+function checkAdminRoute(){
+  if (location.hash === '#admin'){
+    renderAdminScreen();
+  }
+}
+window.addEventListener('hashchange', checkAdminRoute);
+
+/* ----------------------------------------------------------
    INIT
    ---------------------------------------------------------- */
 (function init(){
+  migrateStorage();
+
   currentWallet = getCurrentWallet();
 
   applyLanguage(currentLang);
   updateWalletBadge();
   updateProgress();
   renderAgentList();
+  renderServiceCheckboxes();
+  renderAttachmentList();
   syncNav();
   setupReveal();
   setupCounters();
 
-  /* Start intro on every visit */
   startCinematicIntro();
 
   const backBtn = document.getElementById('globalBackBtn');
   if (backBtn) backBtn.hidden = true;
+
+  checkAdminRoute();
 })();
 </script>
 </body>
