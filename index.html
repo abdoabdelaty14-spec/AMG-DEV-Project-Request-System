@@ -1070,37 +1070,6 @@ input[aria-invalid="true"],textarea[aria-invalid="true"],select[aria-invalid="tr
 }
 .detail-item span{color:var(--muted);font-size:11.5px;min-width:110px;font-weight:600}
 .detail-item strong{font-size:12.5px;line-height:1.75;text-align:end;word-break:break-word;font-weight:700}
-.timeline{margin-top:22px;padding-top:22px;border-top:1px dashed var(--line)}
-.timeline h4{margin-bottom:18px;font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.5px}
-.tl-step{display:grid;grid-template-columns:36px 1fr;gap:14px;position:relative;padding-bottom:24px}
-.tl-step:last-child{padding-bottom:0}
-.tl-step::before{
-  content:"";position:absolute;inset-inline-start:17px;top:38px;bottom:0;
-  width:2px;border-radius:2px;background:var(--line);
-}
-.tl-step:last-child::before{display:none}
-.tl-dot{
-  width:36px;height:36px;border-radius:50%;z-index:1;
-  display:grid;place-items:center;
-  border:2px solid var(--line);background:var(--bg-soft);
-  color:var(--muted);font-size:13px;font-weight:800;
-  transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease);
-}
-.tl-step.done .tl-dot{
-  background:linear-gradient(135deg,var(--green),var(--green-dark));
-  border-color:transparent;color:#fff;box-shadow:0 8px 18px rgba(8,127,114,.28);
-}
-.tl-step.current .tl-dot{background:var(--mint);border-color:var(--green);color:var(--green);animation:pulseDot 2s infinite}
-.tl-step.cancelled .tl-dot{background:rgba(196,82,61,.14);border-color:var(--danger);color:var(--danger)}
-@keyframes pulseDot{
-  0%{box-shadow:0 0 0 0 rgba(8,127,114,.35)}
-  70%{box-shadow:0 0 0 12px rgba(8,127,114,0)}
-  100%{box-shadow:0 0 0 0 rgba(8,127,114,0)}
-}
-.tl-body{padding-top:5px}
-.tl-body strong{display:block;font-size:13px}
-.tl-body span{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
-.tl-step:not(.done):not(.current):not(.cancelled) .tl-body strong{color:var(--muted);font-weight:600}
 .track-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
 .track-actions button{
   padding:10px 16px;border-radius:12px;font-weight:700;font-size:12px;
@@ -2741,6 +2710,10 @@ const TRANSLATIONS = {
     'toast.requestCancelled':'✅ تم إلغاء الطلب',
     'toast.switchedWallet':'🔄 تم تبديل المحفظة',
     'toast.loggedOut':'🚪 تم تسجيل الخروج من المحفظة',
+    'toast.autoSent':'📲 تم إرسال الطلب تلقائيًا إلى الدعم عبر WhatsApp',
+    'toast.autoSentBlocked':'⚠️ الرجاء السماح بالنوافذ المنبثقة لإرسال الطلب تلقائيًا. يمكنك استخدام زر الإرسال بالأسفل.',
+    'toast.cancelNotified':'📲 تم إلغاء الطلب وإشعار الدعم عبر WhatsApp',
+    'toast.cancelNotifiedBlocked':'✅ تم إلغاء الطلب (تعذّر فتح WhatsApp تلقائيًا)',
 
     'wallet.title':'⭐ محفظتي','wallet.greeting':'مرحبًا','wallet.balanceLabel':'رصيد النقاط',
     'wallet.idLabel':'المحفظة:','wallet.earned':'مكتسب','wallet.used':'مستخدم','wallet.last':'آخر عملية',
@@ -2842,7 +2815,9 @@ const TRANSLATIONS = {
     'wa.orderId':'🆔 *رقم الطلب*','wa.date':'⏰ *التاريخ*',
     'wa.site':'اسم الموقع/التطبيق','wa.problemType':'نوع المشكلة',
     'wa.brand':'العلامة/الشركة','wa.adType':'نوع الإعلان','wa.adDuration':'مدة الإعلان',
-    'wa.none':'لا يوجد','wa.noServices':'لا توجد خدمات محددة'
+    'wa.none':'لا يوجد','wa.noServices':'لا توجد خدمات محددة',
+    'wa.cancelTitle':'❌ *تم إلغاء الطلب | AMG DEV*',
+    'wa.cancelBody':'تم إلغاء الطلب التالي:'
   },
   en: {
     'brand.tagline':'BUILD • MANAGE • DELIVER',
@@ -3001,6 +2976,10 @@ const TRANSLATIONS = {
     'toast.requestCancelled':'✅ Request cancelled',
     'toast.switchedWallet':'🔄 Wallet switched',
     'toast.loggedOut':'🚪 Logged out of wallet',
+    'toast.autoSent':'📲 Order auto-sent to support via WhatsApp',
+    'toast.autoSentBlocked':'⚠️ Please allow popups to auto-send the order. You can use the send button below.',
+    'toast.cancelNotified':'📲 Order cancelled and support notified via WhatsApp',
+    'toast.cancelNotifiedBlocked':'✅ Order cancelled (could not open WhatsApp automatically)',
 
     'wallet.title':'⭐ My Wallet','wallet.greeting':'Hello','wallet.balanceLabel':'Points Balance',
     'wallet.idLabel':'Wallet:','wallet.earned':'Earned','wallet.used':'Used','wallet.last':'Last Activity',
@@ -3101,7 +3080,9 @@ const TRANSLATIONS = {
     'wa.orderId':'🆔 *Order Number*','wa.date':'⏰ *Date*',
     'wa.site':'Website/App Name','wa.problemType':'Problem Type',
     'wa.brand':'Brand/Company','wa.adType':'Advertising Type','wa.adDuration':'Advertising Duration',
-    'wa.none':'None','wa.noServices':'No services selected'
+    'wa.none':'None','wa.noServices':'No services selected',
+    'wa.cancelTitle':'❌ *Order Cancelled | AMG DEV*',
+    'wa.cancelBody':'The following order has been cancelled:'
   }
 };
 
@@ -3584,13 +3565,17 @@ function normalizeWhatsAppNumber(value){
   if (digits.length === 10 && digits.startsWith('1')) digits = '2' + digits;
   return digits;
 }
-function openWhatsApp(number, message){
+function openWhatsApp(number, message, options){
+  options = options || {};
   const url = 'https://wa.me/' + normalizeWhatsAppNumber(number) + '?text=' + encodeURIComponent(message);
   let win = null;
   try { win = window.open(url, '_blank', 'noopener'); } catch { win = null; }
-  if (!win || win.closed || typeof win.closed === 'undefined'){
-    // Popup blocked — show a fallback link
-    const fb = document.getElementById('waFallback');
+  const blocked = !win || win.closed || typeof win.closed === 'undefined';
+  if (blocked){
+    // Popup blocked — show a fallback link in the given container (or default #waFallback)
+    const fb = options.fallbackEl !== undefined
+      ? options.fallbackEl
+      : document.getElementById('waFallback');
     if (fb){
       fb.hidden = false;
       fb.innerHTML = escapeHTML(t('success.waBlocked')) +
@@ -3796,6 +3781,24 @@ function buildMessage(){
     + '━━━━━━━━━━━━━━━━━━\n\n'
     + t('wa.date') + '\n\n' + created + '\n\n'
     + '━━━━━━━━━━━━━━━━━━\n\n'
+    + '💙 *AMG DEV*\n*Build • Manage • Deliver*';
+}
+
+function buildCancellationMessage(record){
+  const payload = record.payload || {};
+  const typeLabels = { project:'type.project', maintenance:'type.maintenance', advertise:'type.advertise' };
+  const now = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : 'en-GB')
+    + ' — ' + new Date().toLocaleTimeString(currentLang === 'ar' ? 'ar-EG' : 'en-GB', { hour:'2-digit', minute:'2-digit' });
+  return t('wa.cancelTitle') + '\n\n'
+    + '━━━━━━━━━━━━━━━━━━\n\n'
+    + t('wa.cancelBody') + '\n\n'
+    + '• 🆔 ' + t('wa.orderId').replace(/[🆔*\s]/g,'') + ': ' + record.code + '\n'
+    + '• 🗂️ ' + t('dash.tableType') + ': ' + t(typeLabels[record.type] || 'track.request') + '\n'
+    + '• 👤 ' + t('wa.name') + ': ' + (payload.fullName || t('wa.none')) + '\n'
+    + '• 📱 ' + t('wa.phone') + ': ' + (payload.phone || t('wa.none')) + '\n'
+    + '• 📌 ' + t('wa.projectName') + ': ' + (payload.projectName || t('wa.none')) + '\n\n'
+    + '━━━━━━━━━━━━━━━━━━\n\n'
+    + '⏰ ' + now + '\n\n'
     + '💙 *AMG DEV*\n*Build • Manage • Deliver*';
 }
 
@@ -4009,17 +4012,31 @@ function saveRequest(code, type, payload, stageIndex){
   return requests[code];
 }
 
-function cancelRequest(code){
+function cancelRequest(code, options){
+  options = options || {};
   const requests = getRequests();
-  if (!requests[code]) return false;
-  if (Number(requests[code].stage || 0) >= FINAL_STAGE_INDEX) return false;
+  const record = requests[code];
+  if (!record) return false;
+  if (Number(record.stage || 0) >= FINAL_STAGE_INDEX) return false;
+
   const now = new Date().toISOString();
-  requests[code].cancelled = true;
-  requests[code].status = 'track.cancelled';
-  requests[code].updatedAt = now;
-  requests[code].activity = Array.isArray(requests[code].activity) ? requests[code].activity : [];
-  requests[code].activity.push({ stage: Number(requests[code].stage || 0), status:'track.cancelled', at:now });
+  record.cancelled = true;
+  record.status = 'track.cancelled';
+  record.updatedAt = now;
+  record.activity = Array.isArray(record.activity) ? record.activity : [];
+  record.activity.push({ stage: Number(record.stage || 0), status:'track.cancelled', at:now });
   saveRequests(requests);
+
+  // Auto-notify the selected support agent about the cancellation
+  if (options.notify !== false){
+    const agentNumber = record.payload && record.payload.supportAgent;
+    if (agentNumber){
+      const sent = openWhatsApp(agentNumber, buildCancellationMessage(record));
+      showToast(sent ? t('toast.cancelNotified') : t('toast.cancelNotifiedBlocked'));
+    } else {
+      showToast(t('toast.requestCancelled'));
+    }
+  }
   return true;
 }
 
@@ -4070,21 +4087,6 @@ function renderTrackResult(code){
       escapeHTML(payload.attachments.map(a => a.name || a).join('، ')) + '</strong></li>'
     : '';
 
-  const timeline = ORDER_STAGES.map((s, i) => {
-    let cls = '';
-    if (isCancelled) cls = 'cancelled';
-    else if (i < stage) cls = 'done';
-    else if (i === stage) cls = 'current';
-    const dot = cls === 'done' ? '✓' : cls === 'current' ? '●' : cls === 'cancelled' ? '✕' : '○';
-    return '<div class="tl-step ' + cls + '">' +
-      '<div class="tl-dot">' + dot + '</div>' +
-      '<div class="tl-body">' +
-        '<strong>' + t('stage.' + s.key) + '</strong>' +
-        '<span>' + t('stage.' + s.key + '.desc') + '</span>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-
   const typeLabels = { project:'type.project', maintenance:'type.maintenance', advertise:'type.advertise' };
   const currentStageKey = ORDER_STAGES[stage].key;
 
@@ -4121,10 +4123,6 @@ function renderTrackResult(code){
       '</div>' +
       '<div>' +
         '<ul class="detail-list">' + details + services + attachments + '</ul>' +
-        '<div class="timeline">' +
-          '<h4>' + t('track.timeline') + '</h4>' +
-          timeline +
-        '</div>' +
       '</div>' +
     '</div>';
 
@@ -4135,7 +4133,6 @@ function renderTrackResult(code){
     cancelBtn.addEventListener('click', () => {
       if (!confirm(t('track.cancelConfirm'))) return;
       if (cancelRequest(cancelBtn.dataset.cancelRequest)){
-        showToast(t('toast.requestCancelled'));
         renderTrackResult(code);
       }
     });
@@ -4355,7 +4352,7 @@ function renderAdminScreen(){
       saveRequests(rs); showToast('✅ ' + code + ' → ' + t('stage.' + ORDER_STAGES[next].key)); renderAdminScreen();
     }));
     wrap.querySelectorAll('[data-cancel-for]').forEach(btn => btn.addEventListener('click', () => {
-      if (cancelRequest(btn.dataset.cancelFor)){ showToast(t('toast.requestCancelled')); renderAdminScreen(); }
+      if (cancelRequest(btn.dataset.cancelFor)){ renderAdminScreen(); }
     }));
   }
 
@@ -4402,6 +4399,7 @@ document.getElementById('nextButton').addEventListener('click', () => {
   const services = $$('input[name="services"]:checked').map(i => i.value);
   const payload = {
     fullName: val('fullName'), phone: val('phone'), whatsapp: val('whatsapp'),
+    supportAgent: val('supportAgent'),
     usageCode: val('usageCode'), email: val('email'), country: val('country'), city: val('city'),
     projectName: val('projectName'), projectType: val('projectType'),
     description: val('description'), features: val('features'), reference: val('reference'),
@@ -4421,13 +4419,24 @@ document.getElementById('nextButton').addEventListener('click', () => {
   saveRequest(orderId, 'project', payload, 0);
   openScreen('successScreen');
 
+  // Auto-send the order to the selected support agent via WhatsApp
+  const autoSent = openWhatsApp(
+    getSelectedSupportNumber(),
+    buildMessage(),
+    { fallbackEl: document.getElementById('waFallback') }
+  );
+
   if (wallet){
     const points = getPointsForFormType('project');
     const granted = awardPoints(orderId, wallet.id, 'project', points);
     updateWalletBadge();
-    showToast(granted ? t('toast.pointsEarned', { n: points }) : t('toast.orderSaved'));
+    if (autoSent){
+      showToast(granted ? t('toast.pointsEarned', { n: points }) : t('toast.orderSaved'));
+    } else {
+      showToast(t('toast.autoSentBlocked'));
+    }
   } else {
-    showToast(t('toast.orderSaved'));
+    showToast(autoSent ? t('toast.orderSaved') : t('toast.autoSentBlocked'));
   }
   localStorage.removeItem(STORAGE_KEY);
 });
@@ -4473,6 +4482,7 @@ document.getElementById('maintenanceSubmitBtn').addEventListener('click', () => 
   const wallet = getCurrentWallet();
   const payload = {
     fullName: name, phone, whatsapp, usageCode,
+    supportAgent: agent,
     projectName: site, projectType: typeValue, description, priority:'normal'
   };
   if (wallet) payload.walletId = wallet.id;
@@ -4544,6 +4554,7 @@ document.getElementById('advertiseSubmitBtn').addEventListener('click', () => {
   const wallet = getCurrentWallet();
   const payload = {
     fullName: name, phone, whatsapp, usageCode,
+    supportAgent: agent,
     projectName: brand, projectType: typeValue,
     description, duration: durationValue, priority:'normal'
   };
