@@ -1268,93 +1268,98 @@ footer{
 /* ==========================================================
    RESPONSIVE
    ========================================================== */
-@media (max-width:1180px){
-  .amg-premium-nav{display:none}
-  .amg-nav-menu{display:grid;place-items:center}
-}
-@media (max-width:980px){
-  .hero{grid-template-columns:1fr;gap:36px;padding:36px 0 30px}
-  .brand-hero{align-items:center;text-align:center}
-  .brand-line{align-items:center}
-  .brand-title-wrap{justify-content:center}
-  .brand-text{max-width:100%;text-align:center}
-  .hero-actions,.hero-stats{max-width:100%}
-  .hero-art{margin-inline:auto;max-width:560px}
-  .service-grid,.process-grid,.why-grid,.stats-grid,
-  .testimonial-grid,.projects-grid{grid-template-columns:repeat(2,1fr)}
-  .process-grid .home-card::before{display:none}
-  .track-layout{grid-template-columns:1fr}
-  .track-summary{position:static}
-  .home-cta{flex-direction:column;text-align:center}
-}
-@media (max-width:760px){
-  body{padding-bottom:78px}
-  .amg-header{width:calc(100% - 20px);margin-top:8px;padding:7px 10px;min-height:62px;gap:8px;border-radius:18px}
-  .logo-text small{display:none}
-  .contact-us-btn{width:40px;padding:0;justify-content:center}
-  .contact-us-btn span{display:none}
-  .wallet-badge{padding:0 12px}
-  .wallet-badge span{display:none}
-  .amg-bottom-nav{display:grid}
-  #amgFloatingSupport{width:50px;height:50px;font-size:21px;inset-inline-end:14px;bottom:88px}
-  .toast{inset-inline:14px;bottom:88px;max-width:none}
-  .hero,.home-extra,footer,.form-shell,.wallet-container,.track-panel,.dash-wrap{width:calc(100% - 22px)}
-  .hero{padding-top:28px}
-  .form-card{padding:24px 18px}
-  .progress-card{padding:18px 18px 14px}
-  .fields{grid-template-columns:1fr}
-  .check-grid{grid-template-columns:1fr 1fr}
-  .step-labels{font-size:8.5px;gap:2px}
-  .form-actions{flex-direction:column-reverse}
-  .form-actions button{width:100%}
-  .dash-stats{grid-template-columns:1fr}
-  .wallet-stats{grid-template-columns:1fr}
-  footer{flex-direction:column;text-align:center;margin-bottom:20px}
-  .home-cta{padding:32px 22px}
-  .home-cta button{width:100%}
-}
-@media (max-width:560px){
-  .service-grid,.process-grid,.why-grid,.stats-grid,
-  .testimonial-grid,.projects-grid{grid-template-columns:1fr}
-  .hero-actions{grid-template-columns:1fr}
-  .hero-stats{grid-template-columns:repeat(3,1fr);gap:8px}
-  .hero-stat{padding:12px 6px;border-radius:14px}
-  .hero-stat strong{font-size:17px}
-  .hero-stat span{font-size:9.5px}
-  .brand-name{font-size:clamp(40px,13vw,62px);letter-spacing:-2px}
-  .brand-line > span:first-child{font-size:18px}
-  .rocket{font-size:26px}
-  .hero-art{padding:16px;border-radius:22px}
-  .art-grid{gap:9px}
-  .art-box{padding:12px;border-radius:14px}
-  .art-box-icon{width:26px;height:26px;font-size:13px;border-radius:9px}
-  .art-box-title{font-size:11px}
-  .art-percent{font-size:22px}
-  .art-rent .rent-name{font-size:11px}
-  .check-grid{grid-template-columns:1fr}
-  .section-head{margin-top:56px}
-  .modal-box{padding:22px}
-  .rev-grid{grid-template-columns:1fr}
-  .amg-bottom-nav button{font-size:9px}
-  .amg-bottom-nav button i{font-size:16px}
-  .admin-row{grid-template-columns:1fr;gap:8px}
-}
-@media (max-width:380px){
-  .header-actions{gap:6px}
-  .icon-btn,.back-button,.contact-us-btn,.wallet-badge{
-    width:36px;height:36px;padding:0;justify-content:center;font-size:14px;
-  }
-  .amg-nav-menu{width:36px;height:36px;font-size:16px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.001ms!important;
-  }
-  html{scroll-behavior:auto}
+@media (max-width: 1180px) {
+  .amg-premium-nav { display: none; }
+  .amg-nav-menu { display: grid; place-items: center; }
 }
 
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 0 40px; }
+  .brand-hero { align-items: center; text-align: center; }
+  .brand-line { align-items: center; justify-content: center; }
+  .brand-title-wrap { justify-content: center; }
+  .brand-text { max-width: 100%; text-align: center; padding: 0 16px; }
+  .hero-actions, .hero-stats { max-width: 100%; justify-content: center; }
+  .hero-art { margin-inline: auto; max-width: 600px; }
+  .service-grid, .process-grid, .why-grid, .stats-grid,
+  .testimonial-grid, .projects-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .process-grid .home-card::before { display: none; }
+  .track-layout { grid-template-columns: 1fr; gap: 24px; }
+  .track-summary { position: static; }
+  .home-cta { flex-direction: column; text-align: center; gap: 24px; }
+}
+
+@media (max-width: 760px) {
+  body { padding-bottom: 84px; }
+  .amg-header { width: calc(100% - 24px); margin-top: 12px; padding: 8px 12px; min-height: 66px; gap: 12px; border-radius: 20px; }
+  .logo-text small { display: none; }
+  .contact-us-btn { width: 44px; padding: 0; justify-content: center; border-radius: 12px; }
+  .contact-us-btn span { display: none; }
+  .wallet-badge { padding: 0 14px; border-radius: 12px; }
+  .wallet-badge span { display: none; }
+  .amg-bottom-nav { display: grid; }
+  #amgFloatingSupport { width: 56px; height: 56px; font-size: 24px; inset-inline-end: 16px; bottom: 96px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+  .toast { inset-inline: 16px; bottom: 96px; max-width: none; border-radius: 16px; }
+  .hero, .home-extra, footer, .form-shell, .wallet-container, .track-panel, .dash-wrap { width: calc(100% - 32px); }
+  .hero { padding-top: 32px; }
+  .form-card { padding: 28px 20px; border-radius: 20px; }
+  .progress-card { padding: 20px 20px 16px; border-radius: 18px; }
+  .fields { grid-template-columns: 1fr; gap: 16px; }
+  .check-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .step-labels { font-size: 10px; gap: 4px; font-weight: 600; }
+  .form-actions { flex-direction: column-reverse; gap: 12px; }
+  .form-actions button { width: 100%; min-height: 48px; border-radius: 14px; }
+  .dash-stats { grid-template-columns: 1fr; gap: 16px; }
+  .wallet-stats { grid-template-columns: 1fr; gap: 16px; }
+  footer { flex-direction: column; text-align: center; margin-bottom: 24px; gap: 20px; }
+  .home-cta { padding: 36px 24px; border-radius: 24px; gap: 20px; }
+  .home-cta button { width: 100%; min-height: 50px; border-radius: 14px; }
+}
+
+@media (max-width: 560px) {
+  .service-grid, .process-grid, .why-grid, .stats-grid,
+  .testimonial-grid, .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+  .hero-actions { grid-template-columns: 1fr; gap: 12px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .hero-stat { padding: 14px 8px; border-radius: 16px; }
+  .hero-stat strong { font-size: 19px; }
+  .hero-stat span { font-size: 10px; letter-spacing: 0.02em; }
+  .brand-name { font-size: clamp(42px, 15vw, 64px); letter-spacing: -0.04em; line-height: 1.05; }
+  .brand-line > span:first-child { font-size: 20px; }
+  .rocket { font-size: 30px; }
+  .hero-art { padding: 20px; border-radius: 24px; }
+  .art-grid { gap: 12px; }
+  .art-box { padding: 14px; border-radius: 16px; }
+  .art-box-icon { width: 32px; height: 32px; font-size: 15px; border-radius: 10px; }
+  .art-box-title { font-size: 12px; font-weight: 600; }
+  .art-percent { font-size: 24px; }
+  .art-rent .rent-name { font-size: 12px; }
+  .check-grid { grid-template-columns: 1fr; }
+  .section-head { margin-top: 64px; margin-bottom: 24px; }
+  .modal-box { padding: 28px 20px; border-radius: 24px; }
+  .rev-grid { grid-template-columns: 1fr; gap: 16px; }
+  .amg-bottom-nav button { font-size: 10px; gap: 6px; }
+  .amg-bottom-nav button i { font-size: 18px; margin-bottom: 2px; }
+  .admin-row { grid-template-columns: 1fr; gap: 12px; padding: 16px; border-radius: 16px; }
+}
+
+@media (max-width: 380px) {
+  .header-actions { gap: 8px; }
+  .icon-btn, .back-button, .contact-us-btn, .wallet-badge {
+    width: 40px; height: 40px; padding: 0; justify-content: center; font-size: 16px; border-radius: 12px;
+  }
+  .amg-nav-menu { width: 40px; height: 40px; font-size: 18px; border-radius: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+}
 /* ==========================================================
    PHASE 1 ENHANCEMENTS — ADMIN / ACTIVITY / REQUEST DETAILS
    ========================================================== */
